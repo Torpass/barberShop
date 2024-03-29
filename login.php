@@ -5,9 +5,10 @@
     $connect = new Client();
     
     if(isset($_POST['btnLogin'])){
-        $usuario = $connect->loginClient($_POST['txtName'],$_POST['txtCedula']); 
+        $usuario = $connect->loginClient($_POST['txtName'],$_POST['txtCedula']);
         if($usuario){
           $_SESSION['user_id'] = $usuario["id_Cliente"];
+          $_SESSION['user_role'] = $usuario["role"];
           $_SESSION['logueado'] = true;
           header('Location:index.php');
         }else{

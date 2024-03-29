@@ -6,9 +6,12 @@ class Client extends ConexionSQL{
     }
 
     public function loginClient($name, $cedula){
-        $sql = "SELECT *
+
+        //query to get the client information from the database and the contact information associented to the client 
+        $sql = "SELECT clientes.*, contacto.*
         FROM clientes 
-        WHERE Nombre = :Nombre AND Cedula = :Cedula";
+        INNER JOIN contacto ON clientes.id_Contacto = contacto.id_Contacto
+        WHERE clientes.Nombre = :Nombre AND clientes.Cedula = :Cedula";
 
         $query = $this->conexion->prepare($sql);
         $query->bindParam(':Nombre', $name);
@@ -28,11 +31,18 @@ class Client extends ConexionSQL{
     }
 
     public function signUpClient($firstName, $lastName, $Cedula ,$Telefono, $Gmail){
+        //set the role of the user to client (remenber that 0 is for clients, 1 is for employees and 2 is for admins)
+        $role = 0;
+
         //insert contact information into "contacto" table first
-        $contactSql = "INSERT INTO contacto (Id_Contacto, Telefono, Gmail) Values (NULL, :Telefono, :Gmail)";
+        $contactSql = "INSERT INTO contacto 
+                        (Id_Contacto, Telefono, Gmail, role) 
+                        Values (NULL, :Telefono, :Gmail, :role)";
+
         $contactQuery = $this->conexion->prepare($contactSql);
         $contactQuery->bindParam(':Telefono', $Telefono);
         $contactQuery->bindParam(':Gmail', $Gmail);
+        $contactQuery->bindParam(':role', $role);
         $contactQuery->execute();
 
         //get the id of the last contact inserted
