@@ -5,22 +5,57 @@ class Client extends ConexionSQL{
         parent::__construct();
     }
 
-    public function getEmployees(){
-        $sql = "SELECT * ,(SELECT jobName from tbl_jobs WHERE tbl_jobs.id=tbl_employees.idJob limit 1) as job from tbl_employees";
+    public function loginClient($name, $cedula){
+        $sql = "SELECT *, count(*) as num_users
+        FROM clientes 
+        WHERE Nombre = :Nombre AND Cedula = :Cedula";
+
         $query = $this->conexion->prepare($sql);
+        $query->bindParam(':Nombre', $name);
+        $query->bindParam(':Cedula', $cedula);
+
         if($query->execute()){
-            return $query->fetchAll(PDO::FETCH_ASSOC);
-        }else {return false;}
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+            if($user){
+                return $user;
+            } else {
+                return false;
+            }
+        }else {
+            return false;
+        }
     }
 
-    public function getEmployeeById($employeeID){
-        $sql = "SELECT * ,(SELECT jobName  from tbl_jobs WHERE tbl_jobs.id=tbl_employees.idJob limit 1) as job from tbl_employees WHERE id = $employeeID";
-        $query = $this->conexion->prepare($sql);
-        
-        if($query->execute()){
-            return $query->fetch(PDO::FETCH_LAZY);
-        }else { return false; }
+    public function signUpClient($firstName, $lastName, $Cedula ,$Telefono, $Gmail){
+        //insert contact information into "contacto" table first
+        $contactSql = "INSERT INTO contacto (Id_Contacto, Telefono, Gmail) Values (NULL, :Telefono, :Gmail)";
+        $contactQuery = $this->conexion->prepare($contactSql);
+        $contactQuery->bindParam(':Telefono', $Telefono);
+        $contactQuery->bindParam(':Gmail', $Gmail);
+        $contactQuery->execute();
 
+        //get the id of the last contact inserted
+        $contactID = $this->conexion->lastInsertId();
+
+
+        //insert client information into "clientes" table using the contact id
+        $clientSQL = "INSERT INTO clientes (id_Cliente, Nombre, Apellido, Cedula, id_Contacto) VALUES (NULL, :Nombre, :Apellido, :Cedula, :id_Contacto)";
+        $query=$this->conexion->prepare($clientSQL);
+        $query->bindParam(':Nombre', $firstName);
+        $query->bindParam(':Apellido', $lastName);
+        $query->bindParam(':Cedula', $Cedula);
+        $query->bindParam(':id_Contacto', $contactID);
+
+        if ($query->execute()){
+            //get the id of the last client inserted
+            $clientId = $this->conexion->lastInsertId();
+            return [
+                'id' => $clientId,
+                'name' => $firstName
+            ];
+            } else{
+                return false;
+            } 
     }
 
     public function createEmployee($firstName, $lastName, $photo, $cv, $cvName,$roleID, $dateEntry){
