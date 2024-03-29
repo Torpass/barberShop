@@ -6,8 +6,15 @@
   <link href="./output.css" rel="stylesheet">
 </head>
 <body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+    <?php
+        echo "<h1 class='text-3xl  font-bold underline'>Holiiis  </h1>";
+    ?>
+    <p class="text-sky-400">The quick brown fox...</p>
+
+    <p class="text-slate-400 hover:text-sky-400">The quick brown fox...</p>
+    <p class="text-slate-400 hover:text-sky-400">The quick brown fox...</p>
+    <p class="text-slate-400 hover:text-sky-800">The quick brown fox...</p>
+    <p class="text-slate-400 hover:text-sky-400">The quick brown fox...</p>
+    <p class="text-[#50d71e]">Holas</p>
 </body>
 </html>
