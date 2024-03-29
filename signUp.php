@@ -4,7 +4,7 @@
     <link href="./src/output.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesion</title>
+    <title>Registrar</title>
 </head>
 <body>
     <!-- component -->
@@ -15,33 +15,39 @@
     </div>
     <!-- Right: Login Form -->
     <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
-      <h1 class="text-2xl font-semibold mb-4">Iniciar Sesión</h1>
+      <h1 class="text-2xl font-semibold mb-4">Regístrate</h1>
       <form action="#" method="POST">
-        <!-- Username Input -->
+        <!-- Nombre Input -->
         <div class="mb-4">
           <label for="nombre" class="block text-gray-600">Nombre</label>
           <input type="nombre" id="nombre" name="nombre" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
-        <!-- Password Input -->
+        <!-- Apellido Input -->
+        <div class="mb-4">
+          <label for="apellido" class="block text-gray-600">Apellido</label>
+          <input type="apellido" id="apellido" name="apellido" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+        </div>
+        <!-- Cedula Input -->
         <div class="mb-4">
           <label for="cedula" class="block text-gray-600">Cedula</label>
           <input type="cedula" id="cedula" name="cedula" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
-        <!-- Remember Me Checkbox -->
-        <div class="mb-4 flex items-center">
-          <input type="checkbox" id="remember" name="remember" class="text-blue-500">
-          <label for="remember" class="text-gray-600 ml-2">Recuerdame</label>
+        <!-- Email Input -->
+        <div class="mb-4">
+          <label for="email" class="block text-gray-600">Email</label>
+          <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
-        <!-- Forgot Password Link -->
-        <div class="mb-6 text-blue-500">
-          <a href="#" class="hover:underline">¿Olvidó la contraseña?</a>
+        <!-- telefono Input -->
+        <div class="mb-4">
+          <label for="telefono" class="block text-gray-600">Telefono</label>
+          <input type="telefono" id="telefono" name="telefono" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Login Button -->
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Iniciar Sesión</button>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Registrar</button>
       </form>
       <!-- Sign up  Link -->
       <div class="mt-6 text-blue-500 text-center">
-        <a href="./signUp.php" class="hover:underline">Registrate aquí</a>
+        <a href="./login.php" class="hover:underline">Inicia sesión aquí</a>
       </div>
     </div>
     </div>
