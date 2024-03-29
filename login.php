@@ -6,8 +6,8 @@
     
     if(isset($_POST['btnLogin'])){
         $usuario = $connect->loginClient($_POST['txtName'],$_POST['txtCedula']); 
-        if(isset($usuario["Nombre"])){
-          $_SESSION['user_id'] = $usuario['id_Cliente'];
+        if($usuario){
+          $_SESSION['user_id'] = $usuario["id_Cliente"];
           $_SESSION['logueado'] = true;
           header('Location:index.php');
         }else{

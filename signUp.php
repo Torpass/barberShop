@@ -12,10 +12,8 @@
             $_POST['txtTelefono'],
             $_POST['txtEmail']
         );
-
         if($usuario){
-            $_SESSION['userId'] = $usuario["id"];
-            $_SESSION["userName"] = $usuario["name"];
+            $_SESSION['user_id'] = $usuario["id"];
             $_SESSION['logueado'] = true;
             header('Location: index.php');
         }else{

@@ -6,7 +6,7 @@ class Client extends ConexionSQL{
     }
 
     public function loginClient($name, $cedula){
-        $sql = "SELECT *, count(*) as num_users
+        $sql = "SELECT *
         FROM clientes 
         WHERE Nombre = :Nombre AND Cedula = :Cedula";
 
@@ -15,6 +15,7 @@ class Client extends ConexionSQL{
         $query->bindParam(':Cedula', $cedula);
 
         if($query->execute()){
+            //fetch the user from the database and return it as an array
             $user = $query->fetch(PDO::FETCH_ASSOC);
             if($user){
                 return $user;
@@ -47,11 +48,10 @@ class Client extends ConexionSQL{
         $query->bindParam(':id_Contacto', $contactID);
 
         if ($query->execute()){
-            //get the id of the last client inserted
+            //get the id of the last client inserted and return it as an array
             $clientId = $this->conexion->lastInsertId();
             return [
                 'id' => $clientId,
-                'name' => $firstName
             ];
             } else{
                 return false;
