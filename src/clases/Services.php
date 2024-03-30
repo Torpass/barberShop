@@ -17,7 +17,8 @@ class Service extends ConexionSQL{
 
     public function createService($precio, $duracion, $detalles,$idCategoria,$foto){
         // query to get the client information from the database and the contact information associented to the client 
-        $serviciosSQL= "INSERT INTO servicios (Id_Servicio, Precio, Duracion, Id_Categoria)
+        $serviciosSQL= "INSERT INTO servicios 
+        (Id_Servicio, Precio, Duracion, Id_Categoria)
         VALUES (NULL, :Precio, :Duracion, :Id_Categoria)";
         $serviceQuery = $this->conexion->prepare($serviciosSQL);
         $serviceQuery->bindParam(':Precio', $precio);
@@ -27,8 +28,8 @@ class Service extends ConexionSQL{
         if($serviceQuery->execute()){
             $serviceID = $this->conexion->lastInsertId();
             $detallesSQL = "INSERT INTO detalles_servicio 
-            (Id_Detalle, Id_Servicio, Detalle, img) 
-            VALUES (NULL, :Id_Servicio, :Detalle, :img)";
+            (Id_Detalle, Id_Servicio, Detalle, img, status) 
+            VALUES (NULL, :Id_Servicio, :Detalle, :img, 0)";
             $detailsServiceQuery = $this->conexion->prepare($detallesSQL);
             $detailsServiceQuery->bindParam(':Id_Servicio', $serviceID);
             $detailsServiceQuery->bindParam(':Detalle', $detalles);
@@ -57,12 +58,24 @@ class Service extends ConexionSQL{
         INNER JOIN 
         servicios_categoria c ON s.Id_Categoria = c.Id_Categoria
         INNER JOIN 
-        detalles_servicio ds ON s.id_Servicio = ds.Id_Servicio;";
+        detalles_servicio ds ON s.id_Servicio = ds.Id_Servicio
+        WHERE ds.status = 0;";
 
         $query= $this->conexion->prepare($sql);
         $query->execute();
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteService($id){
+        $sql = "UPDATE detalles_servicio SET status = 1 WHERE Id_Servicio = :id AND status = 0";
+        $query = $this->conexion->prepare($sql);
+        $query->bindParam(':id', $id);
+        if($query->execute()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function updateService($id, $precio, $duracion, $categoryId, $detalle, $imgName){
@@ -81,7 +94,10 @@ class Service extends ConexionSQL{
         $serviceQuery->execute();
     
         // Actualizar la tabla detalles_servicio
-        $detailsSQL = "UPDATE detalles_servicio SET Detalle = :detalle, img = :rutaImagen WHERE Id_Servicio = :id";
+        $detailsSQL = "UPDATE detalles_servicio SET 
+        Detalle = :detalle, 
+        img = :rutaImagen 
+        WHERE Id_Servicio = :id";
         $detailsQuery = $this->conexion->prepare($detailsSQL);
         $detailsQuery->bindParam(':detalle', $detalle);
         $detailsQuery->bindParam(':rutaImagen', $imgName);
