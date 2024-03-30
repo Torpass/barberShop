@@ -44,44 +44,91 @@ class Service extends ConexionSQL{
         }
     }
 
-    public function signUpClient($firstName, $lastName, $Cedula ,$Telefono, $Gmail){
-        //set the role of the user to client (remenber that 0 is for clients, 1 is for employees and 2 is for admins)
-        $role = 0;
+    public function getAllServices(){
+        $sql = "SELECT 
+        s.id_Servicio,
+        s.Precio,
+        s.Duracion,
+        c.nombre AS Nombre_Categoria,
+        ds.Detalle,
+        ds.img AS Ruta_Imagen
+        FROM 
+        Servicios s
+        INNER JOIN 
+        servicios_categoria c ON s.Id_Categoria = c.Id_Categoria
+        INNER JOIN 
+        detalles_servicio ds ON s.id_Servicio = ds.Id_Servicio;";
 
-        //insert contact information into "contacto" table first
-        $contactSql = "INSERT INTO contacto 
-                        (Id_Contacto, Telefono, Gmail, role) 
-                        Values (NULL, :Telefono, :Gmail, :role)";
+        $query= $this->conexion->prepare($sql);
+        $query->execute();
 
-        $contactQuery = $this->conexion->prepare($contactSql);
-        $contactQuery->bindParam(':Telefono', $Telefono);
-        $contactQuery->bindParam(':Gmail', $Gmail);
-        $contactQuery->bindParam(':role', $role);
-        $contactQuery->execute();
-
-        //get the id of the last contact inserted
-        $contactID = $this->conexion->lastInsertId();
-
-
-        //insert client information into "clientes" table using the contact id
-        $clientSQL = "INSERT INTO clientes (id_Cliente, Nombre, Apellido, Cedula, id_Contacto) VALUES (NULL, :Nombre, :Apellido, :Cedula, :id_Contacto)";
-        $query=$this->conexion->prepare($clientSQL);
-        $query->bindParam(':Nombre', $firstName);
-        $query->bindParam(':Apellido', $lastName);
-        $query->bindParam(':Cedula', $Cedula);
-        $query->bindParam(':id_Contacto', $contactID);
-
-        if ($query->execute()){
-            //get the id of the last client inserted and return it as an array
-            $clientId = $this->conexion->lastInsertId();
-            return [
-                'id' => $clientId,
-            ];
-            } else{
-                return false;
-            } 
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function updateService($id, $precio, $duracion, $categoryId, $detalle, $imgName){
+        // Actualizar la tabla Servicios
+        $serviceSQL = "UPDATE Servicios SET 
+        Precio = :precio, 
+        Duracion = :duracion ,
+        Id_Categoria = :catrgoryId 
+        WHERE id_Servicio = :id";
+    
+        $serviceQuery = $this->conexion->prepare($serviceSQL);
+        $serviceQuery->bindParam(':precio', $precio);
+        $serviceQuery->bindParam(':duracion', $duracion);
+        $serviceQuery->bindParam(':id', $id);
+        $serviceQuery->bindParam(':catrgoryId', $categoryId);
+        $serviceQuery->execute();
+    
+        // Actualizar la tabla detalles_servicio
+        $detailsSQL = "UPDATE detalles_servicio SET Detalle = :detalle, img = :rutaImagen WHERE Id_Servicio = :id";
+        $detailsQuery = $this->conexion->prepare($detailsSQL);
+        $detailsQuery->bindParam(':detalle', $detalle);
+        $detailsQuery->bindParam(':rutaImagen', $imgName);
+        $detailsQuery->bindParam(':id', $id);
+        $detailsQuery->execute();
+
+        return true;
+    }
+
+    public function getServiceById($id){
+        $sql = "SELECT 
+        s.id_Servicio,
+        s.Precio,
+        s.Duracion,
+        c.nombre AS Nombre_Categoria,
+        ds.Detalle,
+        ds.img AS Ruta_Imagen
+        FROM 
+        Servicios s
+        INNER JOIN 
+        servicios_categoria c ON s.Id_Categoria = c.Id_Categoria
+        INNER JOIN 
+        detalles_servicio ds ON s.id_Servicio = ds.Id_Servicio
+        WHERE s.id_Servicio = :id;";
+    
+
+        $query= $this->conexion->prepare($sql);
+        $query->bindParam(':id', $id);
+        $query->execute();
+
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    public function createCateogry($nombre){
+        $categorySQL= "INSERT INTO servicios_categoria 
+        (Id_Categoria, nombre)
+        VALUES (NULL, :Nombre)";
+        $categoryQuery = $this->conexion->prepare($categorySQL);
+        $categoryQuery->bindParam(':Nombre', $nombre);
+        
+        if($categoryQuery->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function createEmployee($firstName, $lastName, $photo, $cv, $cvName,$roleID, $dateEntry){
         $sql = "INSERT INTO tbl_employees (id, firstName, lastName, photo, cv, cvName, idJob, startedAt) VALUES (NULL, :firstName, :lastName, :photo, :cv, :cvName, :idJob, :startedAt)";
 

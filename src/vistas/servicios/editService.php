@@ -4,10 +4,12 @@
 
 <?php
     $Services= new Service();
+    $service= $Services->getServiceById($_GET['txtID']);
     $tblCategoryServices= $Services->getAllCategoryServices(); 
     if(isset($_POST['btnRegistrar'])){
         if(!empty($_POST['txtPrecio']) && !empty($_POST['txtDuracion']) && !empty($_POST['txtCategoria'] && !empty($_POST['txtDetalles']))){
             if(!empty($_FILES['photo']['name'])){
+                $id = $_GET['txtID'];
                 $precio = $_POST['txtPrecio'];
                 $duracion = $_POST['txtDuracion'];
                 $detalles = $_POST['txtDetalles'];
@@ -20,14 +22,11 @@
                 $destino = "../../public/servicesImg/" . $uniqueName;
                 copy($ruta,$destino);
                 
-                if($Services->createService($precio, $duracion, $detalles, $categoria, $uniqueName)){
-                    echo "Servicio creado";
-                    header("Location: ./index.php");
+                if($Services->updateService($id, $precio, $duracion, $categoria, $detalles, $uniqueName)){
+                    echo "Servicio actualizado";
                 }else{
                     echo "Error al crear el servicio";
                 }
-                
-
             }else{
                 echo "Falta la foto";
             }
@@ -45,30 +44,36 @@
 <!-- component -->
 <div class="bg-gray-100 flex items-center justify-center">
 			<div class="my-12 max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-				<form action="createService.php" method="post" enctype="multipart/form-data">
+				<form action="" method="post" enctype="multipart/form-data">
                     <!-- Precio del servicio -->
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Precio</label>
-						<input id="postContent" name="txtPrecio" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Precio del servicio..."></input>
+						<input id="postContent" name="txtPrecio" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Precio del servicio..." 
+                        value=<?php echo $service["Precio"]?>>
+                    </input>
 					</div>
 
                     <!-- Duración del servicio -->
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Duracion</label>
-						<input id="postContent" name="txtDuracion" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="¿Cuanto dura el servicio?"></input>
+						<input id="postContent" name="txtDuracion" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="¿Cuanto dura el servicio?"
+                        value=<?php echo $service["Duracion"]?>></input>
 					</div>
 
                     <!-- Detalles del servicio -->
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Detalles</label>
-						<textarea id="postContent" name="txtDetalles" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Detalles del servicio..."></textarea>
+						<textarea id="postContent" name="txtDetalles" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500">
+                            <?php echo $service["Detalle"]?>
+                        </textarea>
 					</div>
 
                     <!-- Categoria del servicio -->
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Categoria del servicio</label>
-						<select id="postContent" name="txtCategoria" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Categoria del servicio...">
-                            <option disabled selected>Selecciona una categoria</option>
+						<select id="postContent" name="txtCategoria" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Categoria del servicio..."
+                        >
+                            <option disabled selected><?php echo $service["Nombre_Categoria"]?></option>
                             <?php foreach ($tblCategoryServices as $service){?>
                             <option placeholder="Selecciona una categoria" value="<?php echo $service['Id_Categoria']?>"><?php echo $service['nombre']?></option>
                         <?php }?>
