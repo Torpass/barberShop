@@ -14,6 +14,7 @@
         );
         if($usuario){
             $_SESSION['user_id'] = $usuario["id"];
+            $_SESSION["user_role"] = $usuario["role"];
             $_SESSION['logueado'] = true;
             header('Location: index.php');
         }else{
