@@ -27,9 +27,6 @@
 	<a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" href="./createEmployee.php" >
 		Agregar Empleado
 	</a>
-	<a class="px-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" href="./createCategory.php" >
-		Horarios
-	</a>
 </div>
 <table class="min-w-full mt-0 border-collapse block md:table">
 		<thead class="block md:table-header-group">
@@ -80,9 +77,6 @@
 						<a
 						 href="./editEmployee.php?txtID=<?php echo $employee["Id_Empleado"] ?>"
 						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Editar</a>
-						<a
-						href="./deleteEmployee.php?txtID=<?php echo $employee["Id_Empleado"] ?>" 
-						class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Eliminar</a>
 					</td>
 			</tr>
   	<?php endforeach; ?>
