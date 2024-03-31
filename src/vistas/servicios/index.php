@@ -24,17 +24,17 @@
     <link href="../../output.css" rel="stylesheet">
 </head>
 <body class="px-3 mt-6">
-    <a class="px-3 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-    data-ripple-light="true" href="./createService.php" >
-    Añadir servicio
-    </a>
-    <a class="px-3 middle none center mr-4 rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-    data-ripple-light="true" href="./createCategory.php" >
-    Añadir Nueva categoria
-    </a>
+<div class="flex items-center justify-center">
+	  <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" href="./createService.php" >
+		Agregar Servicio
+	</a>
+	  <a class="px-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" href="./createCategory.php" >
+		Agregar Categorias
+	</a>
+</div>
 <section class="flex flex-wrap justify-between mr-8">
   <?php foreach ($tblServices as $service): ?>
-    <div class="transition-all duration-150 flex w-full px-4 py-6 w-64">
+    <div class="transition-all duration-150 flex w-full px-4 py-6">
       <div class="flex flex-col items-stretch  pb-4 mb-6 transition-all duration-150 bg-white rounded-lg shadow-lg hover:shadow-2xl">
         <div class="md:flex-shrink-0">
           <img
@@ -59,7 +59,7 @@
           </a>
         </div>
         <hr class="border-gray-300" />
-        <p class="flex flex-row flex-wrap w-full px-4 py-2 h-20 w-64 overflow-auto text-sm text-justify text-gray-700">
+        <p class="flex flex-row flex-wrap w-full px-4 py-2 h-20 overflow-auto text-sm text-justify text-gray-700">
           <?php echo $service["Detalle"]?>
         </p>
         <hr class="border-gray-300" />

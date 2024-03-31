@@ -5,53 +5,62 @@ class Employee extends ConexionSQL{
         parent::__construct();
     }
 
-    public function createEmployee($firstName, $lastName, $Cedula ,$Telefono, $Gmail, $descripcion, $promedio){
-        //set the role of the user to client (remenber that 0 is for clients, 1 is for employees and 2 is for admins)
-        $role = 1;
-
-        //insert contact information into "contacto" table first
-        $contactSql = "INSERT INTO contacto
-                        (Id_Contacto, Telefono, Gmail, role) 
-                        Values (NULL, :Telefono, :Gmail, :role)";
-
+    public function createEmployee($firstName, $lastName, $Cedula, $Telefono, $Gmail, $descripcion, $horarios) {
+        $role = 1; // Employee role
+    
+        // Insert contact information
+        $contactSql = "INSERT INTO contacto (Id_Contacto, Telefono, Gmail, role) VALUES (NULL, :Telefono, :Gmail, :role)";
         $contactQuery = $this->conexion->prepare($contactSql);
         $contactQuery->bindParam(':Telefono', $Telefono);
         $contactQuery->bindParam(':Gmail', $Gmail);
         $contactQuery->bindParam(':role', $role);
         $contactQuery->execute();
-
-        //insert information into "info_empleado"
-        $infoSql = "INSERT INTO info_empleado
-                        (Id_infoEmpleado, descripcion, promedio_Puntuación) 
-                        Values (NULL, :descripcion, :promedio_puntuacin";
-
+        $contactID = $this->conexion->lastInsertId(); // Get the contact ID
+    
+        // Insert employee information
+        $promedioPuntuacion = rand(1, 5);
+        $infoSql = "INSERT INTO info_empleado (Id_infoEmpleado, descripcion, promedio_Puntuacion) VALUES (NULL, :descripcion, :promedio_Puntuacion)";
         $infoQuery = $this->conexion->prepare($infoSql);
-        $infoQuery->bindParam(':Telefono', $descripcion);
-        $infoQuery->bindParam(':promedio_puntuacion', $promedio);
+        $infoQuery->bindParam(':descripcion', $descripcion);
+        $infoQuery->bindParam(':promedio_Puntuacion', $promedioPuntuacion);
         $infoQuery->execute();
-
-        //get the id of the last contact inserted
         $infoId = $this->conexion->lastInsertId();
-
-
-        //insert client information into "clientes" table using the contact id
-        $employeeSQL = "INSERT INTO empleado 
-        (id_Empleado, Nombre, Apellido, Cedula, id_Contacto, id_infoEmpleado) 
-        VALUES (NULL, :Nombre, :Apellido, :Cedula, :id_Contacto, :id_infoEmpleado)";
-        $query=$this->conexion->prepare($employeeSQL);
+    
+        // Insert employee details into "empleado" table
+        $employeeSQL = "INSERT INTO empleado (id_Empleado, Nombre, Apellido, Cedula, id_Contacto, id_infoEmpleado) VALUES (NULL, :Nombre, :Apellido, :Cedula, :id_Contacto, :id_infoEmpleado)";
+        $query = $this->conexion->prepare($employeeSQL);
         $query->bindParam(':Nombre', $firstName);
         $query->bindParam(':Apellido', $lastName);
         $query->bindParam(':Cedula', $Cedula);
         $query->bindParam(':id_Contacto', $contactID);
         $query->bindParam(':id_infoEmpleado', $infoId);
+        $query->execute();
+        $employeeID = $this->conexion->lastInsertId();
+    
+        // Insert employee schedules into "agenda_empleados" table
+        foreach ($horarios as $horario) {
+            $agendaSql = "INSERT INTO agenda_empleados (id_Agenda, id_Empleado, id_Horario) VALUES (NULL, :id_Empleado, :id_Horario)";
+            $agendaQuery = $this->conexion->prepare($agendaSql);
+            $agendaQuery->bindParam(':id_Empleado', $employeeID);
+            $agendaQuery->bindParam(':id_Horario', $horario);
+            $agendaQuery->execute();
+        }
+    
+        // Return true if insertion successful, false otherwise
+        return ($query->rowCount() > 0);
+    }
+    public function getEmployeesWithDetails() {
+        $sql= "SELECT empleado.*, info_empleado.*, contacto.*
+        FROM empleado
+        LEFT JOIN agenda_empleados ON empleado.Id_Empleado = agenda_empleados.Id_Empleado
+        LEFT JOIN info_empleado ON empleado.Id_Empleado = info_empleado.Id_infoEmpleado
+        LEFT JOIN contacto ON empleado.id_Contacto = contacto.id_Contacto
+        GROUP BY empleado.Id_Empleado";
+    
+        $query = $this->conexion->prepare($sql);
+        $query->execute();
 
-        if ($query->execute()){
-            //get the id of the last client inserted and return it as an array
-            $clientId = $this->conexion->lastInsertId();
-            return true;
-            } else{
-                return false;
-            } 
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function deleteEmployee($deleteID){
