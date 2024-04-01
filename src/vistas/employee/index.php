@@ -83,3 +83,5 @@
 		</tbody>
 	</table>
 </body>
+
+<?php include('../../templates/footer.php');?>

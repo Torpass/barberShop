@@ -13,6 +13,17 @@
         $user= $Client->getClientById($_SESSION['user_id']);
 
         $tblCitas = $Citas->getCitas($_SESSION['user_id']);
+
+        if(isset($_GET['txtID'])){
+            $deleteID = $_GET['txtID'];
+            $Citas= $Citas->cancelarCita($deleteID);
+            if($Citas){
+                echo "<script>Swal.fire('Cita cancelada exitosamente')</script>";
+            }else{
+                echo "<script>Swal.fire('Error al cancelar cita')</script>";
+            }
+            
+        }
 ?>
 
 <head>
@@ -75,8 +86,8 @@
                
             <div class="mt-4 flex flex-col w-full 2xl:w-2/3">
                 <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-                    <h4 class="text-xl text-gray-900 font-bold">About</h4>
-                    <table class="min-w-full mt-0 border-collapse block md:table">
+                    <h4 class="text-xl text-gray-900 font-bold">Reporte de Citas realizadas</h4>
+                    <table class="mt-4 min-w-full border-collapse block md:table">
 		<thead class="block md:table-header-group">
 			<tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto md:relative ">
 				<th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Id</th>
@@ -118,13 +129,25 @@
 					</td>
 					<td class="p-2 md:border max-w-xs overflow-auto whitespace-nowrap md:border-grey-500 text-left block md:table-cell">
 						<span class="inline-block w-1/3 md:hidden font-bold">Descripcion</span>
-						<?php echo $cita["Precio"] ?>
+						<?php echo $cita["Precio"]."$" ?>
 					</td>
 					<td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
 						<span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-						<a
-						 href="./editEmployee.php?txtID=<?php echo $employee["Id_Empleado"] ?>"
-						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Editar</a>
+                        <?
+                        if($cita["status"] == "En Espera"):
+                        ?>
+                            <a
+                            href="./profile.php?txtID=<?php echo $cita["id_Citas"] ?>"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Cancelar</a>
+                        <?
+                        elseif($cita["status"] == "Terminado"):
+                        ?>
+                            <a
+                            href="./profile.php?txtID=<?php echo $cita["id_Citas"] ?>"
+                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded">Calificar</a>
+                        <?
+                        endif;
+                        ?>
 					</td>
 			</tr>
   	<?php endforeach; ?>
@@ -132,7 +155,7 @@
 	</table>
                 </div>
                 <div class="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
-                    <h4 class="text-xl text-gray-900 font-bold">Statistics</h4>
+                    <h4 class="text-xl text-gray-900 font-bold">Estadísticas</h4>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
                         <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
@@ -205,9 +228,9 @@
         </div>
     <script>
 
-            const DATA_SET_VERTICAL_BAR_CHART_1 = [68.106, 26.762, 94.255, 72.021, 74.082, 64.923, 85.565, 32.432, 54.664, 87.654, 43.013, 91.443];
+            const DATA_SET_VERTICAL_BAR_CHART_1 = [1, 1, 0, 0, 4, 5, 3, 1, 1, 3, 2, 3];
 
-            const labels_vertical_bar_chart = ['January', 'February', 'Mart', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const labels_vertical_bar_chart = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
             const dataVerticalBarChart= {
                 labels: labels_vertical_bar_chart,
@@ -244,3 +267,5 @@
         </script>
 </body>
 </html>
+
+<?php include('../../templates/footer.php');?>

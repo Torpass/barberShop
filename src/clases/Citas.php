@@ -84,4 +84,17 @@ class Citas extends ConexionSQL{
             return false;
         }
     }
+
+    public function cancelarCita($id){
+        $status = "Cancelado";
+        $sql = "UPDATE citas SET Status = :status WHERE id_Citas = :id";
+        $query = $this->conexion->prepare($sql);
+        $query->bindParam(':status', $status);
+        $query->bindParam(':id', $id);
+        if($query->execute()){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
