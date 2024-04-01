@@ -16,7 +16,33 @@
 
 <?php
 if(isset($_POST['btnRegistrar'])){   
-    if(!empty($_POST['txtTelefono']) && !empty($_POST['txtNombre']) && !empty($_POST['txtApellido']) && !empty($_POST['txtCedula'] && !empty($_POST['txtEmail'] && !empty($_POST['txtHorarios'] && !empty($_POST['txtDescripcion']))))){
+    if(!isset($_POST['txtTelefono']) || $_POST['txtTelefono'] === '') {
+        echo "<script>Swal.fire('El número de teléfono es obligatorio')</script>";
+    } elseif (!preg_match('/^04\d{9}$/', $_POST['txtTelefono'])) {
+        echo "<script>Swal.fire('El número de teléfono debe empezar por 04 y contener exactamente 11 caracteres.')</script>";
+    }elseif (!ctype_digit($_POST['txtTelefono'])) {
+        echo "<script>Swal.fire('El número de teléfono no puede contener letras')</script>";
+    }elseif (!isset($_POST['txtNombre']) || $_POST['txtNombre'] === '') {
+        echo "<script>Swal.fire('El Nombre es un campo obligatorio')</script>";
+    }elseif (!isset($_POST['txtApellido']) || $_POST['txtApellido'] === '') {
+        echo "<script>Swal.fire('El Apellido es un campo obligatorio')</script>";
+    }elseif (!isset($_POST['txtCedula']) || $_POST['txtCedula'] === '') {
+        echo "<script>Swal.fire('La cédula es un campo obligatorio')</script>";
+    }elseif (strlen($_POST['txtCedula']) < 7 || strlen($_POST['txtCedula']) > 8) {
+        echo "<script>Swal.fire('La cédula debe contener entre 7 y 8 caracteres')</script>";
+    }elseif (!ctype_digit($_POST['txtCedula'])) {
+        echo "<script>Swal.fire('La cédula no puede contener letras')</script>";
+    }elseif (!isset($_POST['txtEmail']) || $_POST['txtEmail'] === '') {
+        echo "<script>Swal.fire('El email es obligatorio')</script>";
+    }elseif (!filter_var($_POST['txtEmail'], FILTER_VALIDATE_EMAIL)) {
+        echo "<script>Swal.fire('El campo email debe ser una dirección valida')</script>";
+    }elseif (!isset($_POST['txtDescripcion']) || $_POST['txtDescripcion'] === '') {
+        echo "<script>Swal.fire('La descripción es una campo obligatorio')</script>";
+    }elseif (strlen($_POST['txtDescripcion']) > 250) {
+        echo "<script>Swal.fire('El campo Descripción no debe superar los 250 caracteres.')</script>";
+    }elseif (!isset($_POST['txtHorarios']) || $_POST['txtHorarios'] === '') {
+        echo "<script>Swal.fire('El campo Horarios es obligatorio.')</script>";
+    }else {
 
         $id = $_GET['txtID'];
         $nombre = $_POST['txtNombre'];
@@ -30,12 +56,10 @@ if(isset($_POST['btnRegistrar'])){
 
         $result = $Employees->updateEmployee($id, $nombre, $apellido, $descripcion, $cedula, $horarios, $telefono, $email, $contactId, $infoId, $agendaId);
         if ($result) {
-            echo "La actualización del empleado No falló.";
+            echo "<script>Swal.fire('Empleado actualizado correctamente')</script>";
         } else {
-            echo "El empleado NO se actualizó correctamente.";
+            echo "<script>Swal.fire('Error al actualizar los datos del empleado')</script>";
         }
-    }else{
-        echo "Faltan datos";
     }
 }
 ?>

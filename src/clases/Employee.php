@@ -16,26 +16,26 @@ class Employee extends ConexionSQL{
         $contactQuery->bindParam(':role', $role);
         $contactQuery->execute();
         $contactID = $this->conexion->lastInsertId(); // Get the contact ID
-    
-        // Insert employee information
-        $promedioPuntuacion = rand(1, 5);
-        $infoSql = "INSERT INTO info_empleado (id_infoEmpleado, descripcion, promedio_Puntuacion) VALUES (NULL, :descripcion, :promedio_Puntuacion)";
-        $infoQuery = $this->conexion->prepare($infoSql);
-        $infoQuery->bindParam(':descripcion', $descripcion);
-        $infoQuery->bindParam(':promedio_Puntuacion', $promedioPuntuacion);
-        $infoQuery->execute();
-        $infoId = $this->conexion->lastInsertId();
-    
         // Insert employee details into "empleado" table
-        $employeeSQL = "INSERT INTO empleado (id_Empleado, Nombre, Apellido, Cedula, id_Contacto, id_infoEmpleado) VALUES (NULL, :Nombre, :Apellido, :Cedula, :id_Contacto, :id_infoEmpleado)";
+        $employeeSQL = "INSERT INTO empleado (id_Empleado, Nombre, Apellido, Cedula, id_Contacto) VALUES (NULL, :Nombre, :Apellido, :Cedula, :id_Contacto)";
         $query = $this->conexion->prepare($employeeSQL);
         $query->bindParam(':Nombre', $firstName);
         $query->bindParam(':Apellido', $lastName);
         $query->bindParam(':Cedula', $Cedula);
         $query->bindParam(':id_Contacto', $contactID);
-        $query->bindParam(':id_infoEmpleado', $infoId);
         $query->execute();
         $employeeID = $this->conexion->lastInsertId();
+    
+        // Insert employee information
+        $promedioPuntuacion = rand(1, 5);
+        $infoSql = "INSERT INTO info_empleado (id_infoEmpleado, descripcion, promedio_Puntuacion) VALUES (:id_infoEmpleado, :descripcion, :promedio_Puntuacion)";
+        $infoQuery = $this->conexion->prepare($infoSql);
+        $infoQuery->bindParam(':id_infoEmpleado', $employeeID);
+        $infoQuery->bindParam(':descripcion', $descripcion);
+        $infoQuery->bindParam(':promedio_Puntuacion', $promedioPuntuacion);
+        $infoQuery->execute();
+        $infoId = $this->conexion->lastInsertId();
+    
     
         // Insert employee schedules into "agenda_empleados" table
         foreach ($horarios as $horario) {
@@ -107,8 +107,7 @@ class Employee extends ConexionSQL{
             // Update employee
             $sql = "
                 UPDATE empleado
-                SET Nombre = :nombre, Apellido = :apellido, Cedula = :cedula, id_Contacto = :idContacto, 
-                id_infoEmpleado = :idInfoEmpleado
+                SET Nombre = :nombre, Apellido = :apellido, Cedula = :cedula, id_Contacto = :idContacto
                 WHERE Id_Empleado = :id
             ";
             $stmt = $this->conexion->prepare($sql);
@@ -116,7 +115,6 @@ class Employee extends ConexionSQL{
             $stmt->bindParam(':apellido', $apellido);
             $stmt->bindParam(':cedula', $cedula);
             $stmt->bindParam(':idContacto', $idContacto);
-            $stmt->bindParam(':idInfoEmpleado', $infoId);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
     
