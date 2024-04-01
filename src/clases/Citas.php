@@ -47,4 +47,41 @@ class Citas extends ConexionSQL{
             return false;
         }
     }
+
+    public function getCitas($idCliente){
+        $sql = "SELECT 
+        citas.id_Citas,
+        citas.Fecha_Cita, 
+        citas.Hora_Inicio, 
+        citas.status, 
+        servicios.Precio,
+        servicios_categoria.nombre AS Categoria,
+        empleado.Nombre as nombreEmpleado,
+        empleado.Apellido as apellidoEmpleado
+        FROM 
+            citas
+        INNER JOIN 
+            servicios_reservados ON citas.id_Citas = servicios_reservados.Id_Cita
+        INNER JOIN 
+            servicios ON servicios_reservados.Id_Servicio = servicios.id_Servicio
+        INNER JOIN 
+            servicios_categoria ON servicios.Id_Categoria = servicios_categoria.Id_Categoria
+        INNER JOIN 
+            empleado ON citas.Id_Empleado = empleado.Id_Empleado
+        WHERE 
+            citas.id_Cliente = :idCliente
+        AND citas.status IN ('En espera', 'Terminado');";
+        $query = $this->conexion->prepare($sql);
+        $query->bindParam(':idCliente', $idCliente);
+        if($query->execute()){
+            $citas = $query->fetchAll(PDO::FETCH_ASSOC);
+            if($citas){
+                return $citas;
+            } else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
 }

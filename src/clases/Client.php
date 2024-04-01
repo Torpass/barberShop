@@ -68,21 +68,23 @@ class Client extends ConexionSQL{
             } 
     }
 
-    public function createEmployee($firstName, $lastName, $photo, $cv, $cvName,$roleID, $dateEntry){
-        $sql = "INSERT INTO tbl_employees (id, firstName, lastName, photo, cv, cvName, idJob, startedAt) VALUES (NULL, :firstName, :lastName, :photo, :cv, :cvName, :idJob, :startedAt)";
+    public function getClientById($id){
+        $sql = "SELECT clientes.*, contacto.*
+        FROM clientes 
+        INNER JOIN contacto ON clientes.id_Contacto = contacto.id_Contacto
+        WHERE clientes.id_Cliente = :id";
 
-        $query=$this->conexion->prepare($sql);
-        $query->bindParam(':firstName', $firstName);
-        $query->bindParam(':lastName', $lastName);
-        $query->bindParam(':photo', $photo, PDO::PARAM_LOB);
-        $query->bindParam(':cv', $cv, PDO::PARAM_LOB);
-        $query->bindParam(':cvName', $cvName);
-        $query->bindParam(':idJob', $roleID);
-        $query->bindParam(':startedAt', $dateEntry);
+        $query = $this->conexion->prepare($sql);
+        $query->bindParam(':id', $id);
 
         if($query->execute()){
-            return true;
-        }else {  
+            $client = $query->fetch(PDO::FETCH_ASSOC);
+            if($client){
+                return $client;
+            } else {
+                return false;
+            }
+        }else {
             return false;
         }
     }
