@@ -22,12 +22,9 @@
                 
                 if($Services->createService($precio, $duracion, $detalles, $categoria, $uniqueName)){
                     echo "Servicio creado";
-                    header("Location: ./index.php");
                 }else{
                     echo "Error al crear el servicio";
                 }
-                
-
             }else{
                 echo "Falta la foto";
             }

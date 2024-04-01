@@ -32,7 +32,7 @@
 		Agregar Categorias
 	</a>
 </div>
-<section class="flex flex-wrap justify-between mr-8">
+<section class="grid grid-cols-4 sm:px-5 gap-x-8 gap-y-16">
   <?php foreach ($tblServices as $service): ?>
     <div class="transition-all duration-150 flex w-full px-4 py-6">
       <div class="flex flex-col items-stretch  pb-4 mb-6 transition-all duration-150 bg-white rounded-lg shadow-lg hover:shadow-2xl">
