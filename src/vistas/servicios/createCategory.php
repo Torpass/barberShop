@@ -6,14 +6,19 @@
     $Services= new Service();
     $tblCategoryServices= $Services->getAllCategoryServices(); 
     if(isset($_POST['btnRegistrar'])){
-        if(!empty($_POST['txtNombre'])){
+        if (!isset($_POST['txtNombre']) || $_POST['txtNombre'] === '') {
+            echo "<script>Swal.fire('El nombre de la categoría no puede estar vacío')</script>";
+        } elseif (strlen($_POST['txtNombre']) > 50) {
+            echo "<script>Swal.fire('El nombre de la categoría no debe superar los 50 caracteres')</script>";
+        } elseif (preg_match('/\d/', $_POST['txtNombre'])) {
+            echo "<script>Swal.fire('El nombre de la categoría no debe contener números')</script>";
+        } else {
             $nombre = $_POST['txtNombre'];   
             if($Services->createCateogry($nombre)){
-                header("Location:./index.php");
-                exit;
+                echo "<script>Swal.fire('Categoria creada exitosamente')</script>";
             }else{
+                echo "<script>Swal.fire('Error al crear la categoria')</script>";
             }
-        }else{
         }
     }
 ?>

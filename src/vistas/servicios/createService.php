@@ -6,8 +6,24 @@
     $Services= new Service();
     $tblCategoryServices= $Services->getAllCategoryServices(); 
     if(isset($_POST['btnRegistrar'])){
-        if(!empty($_POST['txtPrecio']) && !empty($_POST['txtDuracion']) && !empty($_POST['txtCategoria'] && !empty($_POST['txtDetalles']))){
-            if(!empty($_FILES['photo']['name'])){
+
+        if (!isset($_POST['txtPrecio']) || $_POST['txtPrecio'] === '') {
+            echo "<script>Swal.fire('El precio del servicio es obligatorio')</script>";
+        } elseif (!is_numeric($_POST['txtPrecio'])) {
+            echo "<script>Swal.fire('El precio del servicio debe ser un numero')</script>";
+        } elseif (!isset($_POST['txtDuracion']) || $_POST['txtDuracion'] === '') {
+            echo "<script>Swal.fire('La duración del servicio es obligatoria')</script>";
+        } elseif (!ctype_digit($_POST['txtDuracion'])) {
+            echo "<script>Swal.fire('La duración del servicio debe ser un número entero')</script>";
+        } elseif (!isset($_POST['txtDetalles']) || $_POST['txtDetalles'] === '') {
+            echo "<script>Swal.fire('Los detalles del servicio son obligatorios')</script>";
+        } elseif (strlen($_POST['txtDetalles']) > 255) {
+            echo "<script>Swal.fire('Los detalles del servicio no deben superar los 255 caracteres')</script>";
+        } elseif (!isset($_POST['txtCategoria']) || $_POST['txtCategoria'] === '') {
+            echo "<script>Swal.fire('La categoría del servicio es obligatoria')</script>";
+        } elseif (!isset($_FILES['photo']) || $_FILES['photo']['error'] != UPLOAD_ERR_OK) {
+            echo "<script>Swal.fire('La foto del servicio es obligatoria')</script>";
+        } else {
                 $precio = $_POST['txtPrecio'];
                 $duracion = $_POST['txtDuracion'];
                 $detalles = $_POST['txtDetalles'];
@@ -21,16 +37,11 @@
                 copy($ruta,$destino);
                 
                 if($Services->createService($precio, $duracion, $detalles, $categoria, $uniqueName)){
-                    echo "Servicio creado";
+                    echo "<script>Swal.fire('Servicio creado exitosamente')</script>";
                 }else{
-                    echo "Error al crear el servicio";
+                    echo "<script>Swal.fire('Error al crear el servicio')</script>";
                 }
-            }else{
-                echo "Falta la foto";
             }
-        }else{
-            echo "Faltan datos";
-        }
     }
 ?>
 

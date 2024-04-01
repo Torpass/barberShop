@@ -46,7 +46,7 @@
     </div>
     <section id="services" class="mt-6">
     <hr class="h-4 border-gray-300"/>
-      <h1 class="mb-8 text-2xl font-bold leading-none lg:text-3xl xl:text-3xl">Servicios Disponibles</h1>
+      <h1 class="mb-8 text-2xl font-bold leading-none lg:text-3xl xl:text-3xl">Nuestro servicios mas populares</h1>
       <div class="grid grid-cols-12 sm:px-5 gap-x-8 gap-y-16">
       <?php $counter = 0;?>
       <?php foreach ($tblServices as $service): ?>
