@@ -7,7 +7,7 @@
     session_start();
   }
   $Services= new Service();
-    $tblServices= $Services->getAllServices(); 
+  $tblServices= $Services->getAllServices(); 
   $Employee= new Employee();
   $tblEmployees = $Employee->getEmployeesWithDetails();
 ?>
