@@ -145,4 +145,21 @@ class Employee extends ConexionSQL{
             throw $e;
         }
     }
+
+    public function loginEmployee($nombre, $cedula){
+        $sql = "SELECT empleado.*, contacto.*
+        FROM empleado
+        LEFT JOIN contacto ON empleado.id_Contacto = contacto.id_Contacto
+        WHERE empleado.Nombre = :nombre AND empleado.Cedula = :cedula";
+        $query = $this->conexion->prepare($sql);
+        $query->bindParam(':nombre', $nombre);
+        $query->bindParam(':cedula', $cedula);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+            echo "nao nao";
+        }
+        
+    }
 }
+

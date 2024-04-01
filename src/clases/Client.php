@@ -7,6 +7,8 @@ class Client extends ConexionSQL{
 
     public function loginClient($name, $cedula){
 
+        
+
         //query to get the client information from the database and the contact information associented to the client 
         $sql = "SELECT clientes.*, contacto.*
         FROM clientes 

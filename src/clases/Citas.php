@@ -85,6 +85,43 @@ class Citas extends ConexionSQL{
         }
     }
 
+    public function getCitasFromEmployee($employeeId){
+        $sql = "SELECT 
+        citas.id_Citas,
+        citas.Fecha_Cita, 
+        citas.Hora_Inicio, 
+        citas.status, 
+        servicios.Precio,
+        servicios_categoria.nombre AS Categoria,
+        clientes.Nombre as nombreCliente,
+        clientes.Apellido as apellidoCliente
+        FROM 
+            citas
+        INNER JOIN 
+            servicios_reservados ON citas.id_Citas = servicios_reservados.Id_Cita
+        INNER JOIN 
+            servicios ON servicios_reservados.Id_Servicio = servicios.id_Servicio
+        INNER JOIN 
+            servicios_categoria ON servicios.Id_Categoria = servicios_categoria.Id_Categoria
+        INNER JOIN 
+            clientes ON citas.id_Cliente = clientes.id_Cliente
+        WHERE 
+            citas.Id_Empleado = :idEmployee
+        AND citas.status IN ('En espera', 'Terminado', 'Cancelado');";
+        $query = $this->conexion->prepare($sql);
+        $query->bindParam(':idEmployee', $idCliente);
+        if($query->execute()){
+            $citas = $query->fetchAll(PDO::FETCH_ASSOC);
+            if($citas){
+                return $citas;
+            } else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+
     public function cancelarCita($id){
         $status = "Cancelado";
         $sql = "UPDATE citas SET Status = :status WHERE id_Citas = :id";

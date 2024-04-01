@@ -5,6 +5,9 @@
 <?php 
   if(session_status() !== PHP_SESSION_ACTIVE) {
     session_start();}
+
+	$contactId = $_SESSION['contact_id'];
+	echo $contactId;
     
     $Employee= new Employee();
 

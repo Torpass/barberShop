@@ -1,7 +1,8 @@
 <?php
     session_start();
     $user_role = $_SESSION["user_role"];  
-    if(!isset($_SESSION['user_id'])){
+
+    if(!$_SESSION['employee_id'] && !$_SESSION['user_id']){
         header('Location: http://localhost/barberShop/login.php');
         die();
     }
