@@ -9,7 +9,33 @@
 
 <?php
 if(isset($_POST['btnRegistrar'])){   
-    if(!empty($_POST['txtTelefono']) && !empty($_POST['txtNombre']) && !empty($_POST['txtApellido']) && !empty($_POST['txtCedula'] && !empty($_POST['txtEmail'] && !empty($_POST['txtHorarios'] && !empty($_POST['txtDescripcion']))))){
+    if(!isset($_POST['txtTelefono']) || $_POST['txtTelefono'] === '') {
+        echo "<script>Swal.fire('El número de teléfono es obligatorio')</script>";
+    } elseif (!preg_match('/^04\d{9}$/', $_POST['txtTelefono'])) {
+        echo "<script>Swal.fire('El número de teléfono debe empezar por 04 y contener exactamente 11 caracteres.')</script>";
+    }elseif (!ctype_digit($_POST['txtTelefono'])) {
+        echo "<script>Swal.fire('El número de teléfono no puede contener letras')</script>";
+    }elseif (!isset($_POST['txtNombre']) || $_POST['txtNombre'] === '') {
+        echo "<script>Swal.fire('El Nombre es un campo obligatorio')</script>";
+    }elseif (!isset($_POST['txtApellido']) || $_POST['txtApellido'] === '') {
+        echo "<script>Swal.fire('El Apellido es un campo obligatorio')</script>";
+    }elseif (!isset($_POST['txtCedula']) || $_POST['txtCedula'] === '') {
+        echo "<script>Swal.fire('La cédula es un campo obligatorio')</script>";
+    }elseif (strlen($_POST['txtCedula']) < 7 || strlen($_POST['txtCedula']) > 8) {
+        echo "<script>Swal.fire('La cédula debe contener entre 7 y 8 caracteres')</script>";
+    }elseif (!ctype_digit($_POST['txtCedula'])) {
+        echo "<script>Swal.fire('La cédula no puede contener letras')</script>";
+    }elseif (!isset($_POST['txtEmail']) || $_POST['txtEmail'] === '') {
+        echo "<script>Swal.fire('El email es obligatorio')</script>";
+    }elseif (!filter_var($_POST['txtEmail'], FILTER_VALIDATE_EMAIL)) {
+        echo "<script>Swal.fire('El campo email debe ser una dirección valida')</script>";
+    }elseif (!isset($_POST['txtDescripcion']) || $_POST['txtDescripcion'] === '') {
+        echo "<script>Swal.fire('La descripción es una campo obligatorio')</script>";
+    }elseif (strlen($_POST['txtDescripcion']) > 250) {
+        echo "<script>Swal.fire('El campo Descripción no debe superar los 250 caracteres.')</script>";
+    }elseif (!isset($_POST['txtHorarios']) || $_POST['txtHorarios'] === '') {
+        echo "<script>Swal.fire('El campo Horarios es obligatorio.')</script>";
+    }else {
 
         $nombre = $_POST['txtNombre'];
         $apellido = $_POST['txtApellido'];
@@ -20,12 +46,10 @@ if(isset($_POST['btnRegistrar'])){
         $horarios = $_POST['txtHorarios'];
 
         if($Employees->createEmployee($nombre, $apellido, $cedula, $telefono, $email, $descripcion, $horarios)){
-            echo "Servicio creado";
+            echo "<script>Swal.fire('Empleado registrado correctamente')</script>";
         }else{
-            echo "Error al crear el servicio";
+            echo "<script>Swal.fire('Error al registrar el empleado')</script>";
         }
-    }else{
-        echo "Faltan datos";
     }
 }
 ?>
@@ -39,7 +63,7 @@ if(isset($_POST['btnRegistrar'])){
 <section class="max-w-4xl mb-12 p-6 mx-auto rounded-md shadow-md dark:bg-gray-800 mt-20">
     <a class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-500 rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none" href="./index.php">Salir</a>	
     <h1 class="text-xl font-bold text-white capitalize dark:text-white">Crear Empleado</h1>
-    <form method="post" action="createEmployee.php">
+    <form method="post" action="createEmployee.php" onsubmit="validateForm()">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <!-- input name -->
             <div>
@@ -106,4 +130,33 @@ if(isset($_POST['btnRegistrar'])){
         const checkbox = document.getElementById(id);
         checkbox.checked = !checkbox.checked;
     }
+</script>
+
+<script>
+function validateForm() {
+    var telefono = document.getElementById('txtTelefono').value;
+    var nombre = document.getElementById('txtNombre').value;
+    var apellido = document.getElementById('txtApellido').value;
+    var cedula = document.getElementById('txtCedula').value;
+    var email = document.getElementById('txtEmail').value;
+    var descripcion = document.getElementById('txtDescripcion').value;
+    var horarios = document.getElementById('txtHorarios').value;
+
+    if (!telefono.startsWith('04') || telefono.length !== 11) {
+        Swall.fire('El número de teléfono debe empezar por 04 y contener exactamente 11 caracteres.');
+        return false;
+    }
+
+    if (!nombre || !apellido || !cedula || !email || !descripcion || !horarios) {
+        Swal.fire('Todos los campos deben estar llenos');
+        return false;
+    }
+
+    if (descripcion.length > 250) {
+        alert('La descripción no debe superar los 250 caracteres.');
+        return false;
+    }
+
+    return true;
+}
 </script>

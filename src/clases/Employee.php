@@ -19,7 +19,7 @@ class Employee extends ConexionSQL{
     
         // Insert employee information
         $promedioPuntuacion = rand(1, 5);
-        $infoSql = "INSERT INTO info_empleado (Id_infoEmpleado, descripcion, promedio_Puntuacion) VALUES (NULL, :descripcion, :promedio_Puntuacion)";
+        $infoSql = "INSERT INTO info_empleado (id_infoEmpleado, descripcion, promedio_Puntuacion) VALUES (NULL, :descripcion, :promedio_Puntuacion)";
         $infoQuery = $this->conexion->prepare($infoSql);
         $infoQuery->bindParam(':descripcion', $descripcion);
         $infoQuery->bindParam(':promedio_Puntuacion', $promedioPuntuacion);
@@ -53,7 +53,7 @@ class Employee extends ConexionSQL{
         $sql= "SELECT empleado.*, info_empleado.*, contacto.*
         FROM empleado
         LEFT JOIN agenda_empleados ON empleado.Id_Empleado = agenda_empleados.Id_Empleado
-        LEFT JOIN info_empleado ON empleado.Id_Empleado = info_empleado.Id_infoEmpleado
+        LEFT JOIN info_empleado ON empleado.Id_Empleado = info_empleado.id_infoEmpleado
         LEFT JOIN contacto ON empleado.id_Contacto = contacto.id_Contacto
         GROUP BY empleado.Id_Empleado";
     
