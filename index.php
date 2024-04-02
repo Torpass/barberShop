@@ -93,10 +93,11 @@
               <div>
                   <img class="object-center object-cover h-auto w-full" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80" alt="photo">
               </div>
-              <div class="text-center py-8 sm:py-6">
+              <a class="text-center py-8 sm:py-6"
+                href=<?php echo './src/vistas/user/reviews.php?txtId='.$employee["Id_Empleado"] ?>>
                   <p class="text-xl text-gray-700 font-bold mb-2"><?php echo $employee["Nombre"]?></p>
                   <p class="text-base text-gray-400 font-normal"><?php echo $employee["descripcion"]?></p>
-              </div>
+              </a>
           </div>
         <?php $counter++; ?>
       <?php endforeach; ?>
@@ -105,4 +106,6 @@
     </div>
   </div>
 </div>
+
+
 <?php include('./src/templates/footer.php');?>
