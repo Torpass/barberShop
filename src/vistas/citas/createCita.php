@@ -13,12 +13,12 @@
     $tblEmployees = $Employee->getEmployeesWithDetails();
     $Cita = new Citas();
 
-    $time = DateTime::createFromFormat('H:i', $_POST['txtTime']);
     $startTime = DateTime::createFromFormat('H:i', '08:00');
     $endTime = DateTime::createFromFormat('H:i', '17:00');
 
 
     if(isset($_POST['txtRegister'])){
+        $time = DateTime::createFromFormat('H:i', $_POST['txtTime']);
         if(!isset($_POST['txtTime']) || $_POST['txtTime'] === '') {
             echo "<script>Swal.fire('La Hora es un campo obligatorio')</script>";
         }elseif ($time < $startTime || $time > $endTime) {
