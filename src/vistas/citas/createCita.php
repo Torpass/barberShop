@@ -13,8 +13,21 @@
     $tblEmployees = $Employee->getEmployeesWithDetails();
     $Cita = new Citas();
 
+    $time = DateTime::createFromFormat('H:i', $_POST['txtTime']);
+    $startTime = DateTime::createFromFormat('H:i', '08:00');
+    $endTime = DateTime::createFromFormat('H:i', '17:00');
+
 
     if(isset($_POST['txtRegister'])){
+        if(!isset($_POST['txtTime']) || $_POST['txtTime'] === '') {
+            echo "<script>Swal.fire('La Hora es un campo obligatorio')</script>";
+        }elseif ($time < $startTime || $time > $endTime) {
+            echo "<script>Swal.fire('La hora debe estar entre las 8am y las 5pm')</script>";
+        }elseif (!isset($_POST['txtService']) || $_POST['txtService'] === '') {
+            echo "<script>Swal.fire('El servicio es un campo obligatorio')</script>";
+        }elseif (!isset($_POST['txtEmployee']) || $_POST['txtEmployee'] === '') {
+            echo "<script>Swal.fire('El empleado es un campo obligatorio')</script>";
+        }else {
         $FechaInicio = $_POST['txtDate'];
         $horaInicio = $_POST['txtTime'];
         $serviceId = $_POST['txtService'];
@@ -30,6 +43,7 @@
             echo "<script>Swal.fire('Error al registrar la cita')</script>";
         }
     }
+}
 ?>
 
 <div class="w-full">
