@@ -7,7 +7,6 @@
 $Review = new Review();
 $tblReviews = $Review->getBarberReviews();
 $user_role = $_SESSION["user_role"];
-echo $user_role;
 
 if(isset($_GET['txtId'])){
     $deleteID = $_GET['txtId'];
@@ -26,6 +25,11 @@ if(isset($_GET['txtId'])){
 	  <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" href="./createReview.php" >
 		Agregar Reseña
 	</a>
+    <?php if($user_role == 2):?>
+        <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href="../../fpdf/allReviews.php" >
+            Generar reporte de reseñas
+        </a>
+    <?php endif; ?>
 </div>
 <section id="reviews" aria-labelledby="testimonial-heading" class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-12">
     <div class="mx-auto max-w-2xl lg:max-w-none ">

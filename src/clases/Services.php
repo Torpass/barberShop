@@ -67,6 +67,27 @@ class Service extends ConexionSQL{
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAllServicesReport(){
+        $sql = "SELECT 
+        s.id_Servicio,
+        s.Precio,
+        s.Duracion,
+        c.nombre AS Nombre_Categoria,
+        ds.Detalle,
+        ds.status as status
+        FROM 
+        Servicios s
+        INNER JOIN 
+        servicios_categoria c ON s.Id_Categoria = c.Id_Categoria
+        INNER JOIN 
+        detalles_servicio ds ON s.id_Servicio = ds.Id_Servicio";
+
+        $query= $this->conexion->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function deleteService($id){
         $sql = "UPDATE detalles_servicio SET status = 1 WHERE Id_Servicio = :id AND status = 0";
         $query = $this->conexion->prepare($sql);
