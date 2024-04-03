@@ -63,8 +63,8 @@
 
                     <!-- Duración del servicio -->
                     <div class="mb-6">
-						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Duracion</label>
-						<input id="postContent" name="txtDuracion" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="¿Cuanto dura el servicio?"></input>
+						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Duracion en minutos</label>
+						<input id="postContent" name="txtDuracion" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Ingrese la cantidad de minutos que durará el servicio...."></input>
 					</div>
 
                     <!-- Detalles del servicio -->
