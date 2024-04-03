@@ -3,27 +3,14 @@
     include('./src/clases/Conexion.php');
     include('./src/clases/Employee.php');
     $Employees = new Employee();
-    
-    if(isset($_POST['btnLogin'])){
-        $employee = $Employees->loginEmployee($_POST['txtName'],$_POST['txtCedula']);
-        if($employee){
-          $_SESSION['employee_id'] = $employee["Id_Empleado"];
-          $_SESSION["user_id"] = null;
-          $_SESSION['user_role'] = $employee["role"];
-          $_SESSION['logueado'] = true;
-
-          header('Location:index.php');
-        }else{
-          $message = "Error: El usuario o contraseña son incorrectos";
-          echo "epa compañero";
-        } 
-    }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
     <link href="./src/output.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +21,7 @@
     <div class="bg-gray-100 flex justify-center items-center h-screen">
         <!-- Left: Image -->
     <div class="w-1/2 h-screen hidden lg:block">
-      <img src="https://placehold.co/800x/667fff/ffffff.png?text=Your+Image&font=Montserrat" alt="Placeholder Image" class="object-cover w-full h-full">
+      <img src="https://onpointfresh.com/wp-content/uploads/2023/09/hair-600x600.png" alt="Placeholder Image" class="object-cover w-full h-full">
     </div>
     <!-- Right: Login Form -->
     <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
@@ -43,7 +30,7 @@
         <!-- Username Input -->
         <div class="mb-4">
           <label for="nombre" class="block text-gray-600">Nombre del empleado</label>
-          <input type="nombre" id="nombre" name="txtName" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="nombre" id="nombre" name="txtNombre" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Password Input -->
         <div class="mb-4">
@@ -71,3 +58,30 @@
 </body>
 </html>
 
+<?php 
+if(isset($_POST['btnLogin'])){
+  if(!isset($_POST['txtNombre']) || $_POST['txtNombre'] === '') {
+    echo "<script>Swal.fire('El Nombre es un campo obligatorio')</script>";
+  }elseif (!isset($_POST['txtCedula']) || $_POST['txtCedula'] === '') {
+    echo "<script>Swal.fire('La cédula es un campo obligatorio')</script>";
+  }elseif (!ctype_digit($_POST['txtCedula'])) {
+    echo "<script>Swal.fire('La cédula no puede contener letras')</script>";
+  }else{
+    $usuario = $Employees->loginEmployee($_POST['txtNombre'],$_POST['txtCedula']);
+    if($usuario){
+      $_SESSION['employee_id'] = $usuario['Id_Empleado'];
+      $_SESSION['user_id'] = null;
+      $_SESSION['user_role'] = $usuario["role"];
+
+      $_SESSION['logueado'] = true;
+      header('Location:index.php');
+    
+    }else{
+      echo "<script>Swal.fire('Combinacion de usuario y contraseña incorrectos')</script>";
+    }
+  }
+
+}
+
+
+?>

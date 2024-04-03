@@ -4,27 +4,14 @@
     include('./src/clases/Client.php');
     $connect = new Client();
     
-    if(isset($_POST['btnLogin'])){
-        $usuario = $connect->loginClient($_POST['txtName'],$_POST['txtCedula']);
-        if($usuario){
-          $_SESSION['user_id'] = $usuario["id_Cliente"];
-          $_SESSION['user_role'] = $usuario["role"];
-          $_SESSION['employee_id'] = null;
-
-          $_SESSION['logueado'] = true;
-          header('Location:index.php');
-        
-        }else{
-          $message = "Error: El usuario o contraseña son incorrectos";
-          echo "epa compañero";
-        } 
-    }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
     <link href="./src/output.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +22,7 @@
     <div class="bg-gray-100 flex justify-center items-center h-screen">
         <!-- Left: Image -->
     <div class="w-1/2 h-screen hidden lg:block">
-      <img src="https://placehold.co/800x/667fff/ffffff.png?text=Your+Image&font=Montserrat" alt="Placeholder Image" class="object-cover w-full h-full">
+      <img src="https://th.bing.com/th/id/R.7306ae448c24fb3eb145983a47bb781e?rik=m00r9%2bpE%2bruppw&pid=ImgRaw&r=0" alt="Placeholder Image" class="object-cover w-full h-full">
     </div>
     <!-- Right: Login Form -->
     <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
@@ -44,7 +31,7 @@
         <!-- Username Input -->
         <div class="mb-4">
           <label for="nombre" class="block text-gray-600">Nombre</label>
-          <input type="nombre" id="nombre" name="txtName" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="nombre" id="nombre" name="txtNombre" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Password Input -->
         <div class="mb-4">
@@ -73,3 +60,32 @@
 </body>
 </html>
 
+
+<?php 
+
+if(isset($_POST['btnLogin'])){
+  if(!isset($_POST['txtNombre']) || $_POST['txtNombre'] === '') {
+    echo "<script>Swal.fire('El Nombre es un campo obligatorio')</script>";
+  }elseif (!isset($_POST['txtCedula']) || $_POST['txtCedula'] === '') {
+    echo "<script>Swal.fire('La cédula es un campo obligatorio')</script>";
+  }elseif (!ctype_digit($_POST['txtCedula'])) {
+    echo "<script>Swal.fire('La cédula no puede contener letras')</script>";
+  }else{
+    $usuario = $connect->loginClient($_POST['txtNombre'],$_POST['txtCedula']);
+    if($usuario){
+      $_SESSION['user_id'] = $usuario["id_Cliente"];
+      $_SESSION['user_role'] = $usuario["role"];
+      $_SESSION['employee_id'] = null;
+
+      $_SESSION['logueado'] = true;
+      header('Location:index.php');
+    
+    }else{
+      echo "<script>Swal.fire('Combinacion de usuario y contraseña incorrectos')</script>";
+    }
+  }
+
+}
+
+
+?>

@@ -43,7 +43,7 @@
       <div class="w-full md:w-1/2">
         <div class="block">
           <img
-              src="https://images.unsplash.com/photo-1626314928277-1d373ddb6428?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mzd8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" class="object-cover rounded-lg max-h-64 sm:max-h-96 btn- w-full h-full"/>
+              src="https://th.bing.com/th/id/OIP.1ezVrI_M0nAP6spJLF9JSQHaE6?rs=1&pid=ImgDetMain" class="object-cover rounded-lg max-h-64 sm:max-h-96 btn- w-full h-full"/>
         </div>
       </div>
     </div>
@@ -86,24 +86,34 @@
       </div>
       <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <?php $counter = 0;?>
-      <?php foreach ($tblEmployees as $employee): ?>
-        <?php 
-          if ($counter == 6) {
-            break;
-          }
-        ?>
-          <div class="w-full bg-white rounded-lg sahdow-lg overflow-hidden flex flex-col justify-center items-center">
-              <div>
-                  <img class="object-center object-cover h-auto w-full" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80" alt="photo">
-              </div>
-              <a class="text-center py-8 sm:py-6"
-                href=<?php echo './src/vistas/user/reviews.php?txtId='.$employee["Id_Empleado"] ?>>
-                  <p class="text-xl text-gray-700 font-bold mb-2"><?php echo $employee["Nombre"]?></p>
-                  <p class="text-base text-gray-400 font-normal"><?php echo $employee["descripcion"]?></p>
-              </a>
-          </div>
-        <?php $counter++; ?>
-      <?php endforeach; ?>
+<?php foreach ($tblEmployees as $employee): ?>
+  <?php 
+    if ($counter == 6) {
+      break;
+    }
+  ?>
+  <div class="w-full bg-white rounded-lg sahdow-lg overflow-hidden flex flex-col justify-center items-center">
+    <div>
+      <?php 
+        $images = [
+          'https://th.bing.com/th/id/OIP.zG9EwntdmTMpNgtT5xldTwHaEu?rs=1&pid=ImgDetMain',
+          'https://th.bing.com/th/id/OIP.ZWI_iIWLhh-xuwq-TozUzwHaE5?w=1998&h=1321&rs=1&pid=ImgDetMain',
+          'https://th.bing.com/th/id/R.20f54d6bb3958eda1e2eb9a6e6df920e?rik=jsnhtIaRuGhnZg&riu=http%3a%2f%2fbeautyandhairdressing.co.uk%2ffiles%2fweb%2fAdobeStock_101037217-5009.jpg&ehk=3%2bl7lVnD5qBplw1gvePAM6%2bA%2fyot2Kry0f2UgHoAXLE%3d&risl=&pid=ImgRaw&r=0',
+          'https://viewstockholm.com/wp-content/uploads/2020/06/man-stockholm-barbershop-barberare.jpg',
+          'https://th.bing.com/th/id/OIP.Jcle3ArIZRFGZzvIcEzDCAHaHa?w=696&h=696&rs=1&pid=ImgDetMain',
+          'https://th.bing.com/th/id/OIP.-lHmX7a6x23fIyZaH7Rs1QHaE8?rs=1&pid=ImgDetMain'
+        ];
+      ?>
+      <img class="w-128 h-128 rounded-lg rounded-b-none object-center object-cover" src="<?php echo $images[$counter]; ?>" alt="photo">
+    </div>
+    <a class="text-center py-8 sm:py-6"
+      href=<?php echo './src/vistas/user/reviews.php?txtId='.$employee["Id_Empleado"] ?>>
+        <p class="text-xl text-gray-700 font-bold mb-2"><?php echo $employee["Nombre"]?></p>
+        <p class="text-base text-gray-400 font-normal"><?php echo $employee["descripcion"]?></p>
+    </a>
+  </div>
+  <?php $counter++; ?>
+<?php endforeach; ?>
       </div>
   </section>
 

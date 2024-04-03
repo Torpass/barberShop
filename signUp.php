@@ -22,7 +22,7 @@
     <div class="bg-gray-100 flex justify-center items-center h-screen">
         <!-- Left: Image -->
     <div class="w-1/2 h-screen hidden lg:block">
-      <img src="https://placehold.co/800x/667fff/ffffff.png?text=Your+Image&font=Montserrat" alt="Placeholder Image" class="object-cover w-full h-full">
+      <img src="https://th.bing.com/th/id/R.19af11382f118a6542526b3679c8c2b4?rik=3vz41T1HBETEfQ&riu=http%3a%2f%2fwww.barburys.com%2fsites%2fdefault%2ffiles%2fbackgrounds%2fbeeld-5c.jpg&ehk=SjrYNHJHWC5mL%2fthG59f%2bOmn7ORTGeW%2fX9mtwLSBjdQ%3d&risl=&pid=ImgRaw&r=0" alt="Placeholder Image" class="object-cover w-full h-full">
     </div>
     <!-- Right: Login Form -->
     <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
