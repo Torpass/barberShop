@@ -24,7 +24,7 @@ class PDF extends FPDF
       $this->SetTextColor(228, 100, 0);
       $this->Cell(100); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(100, 10, utf8_decode("REPORTE DE RESEÑAS "), 0, 1, 'C', 0);
+      $this->Cell(100, 10, utf8_decode("REPORTE DE CITAS REALIZADAS "), 0, 1, 'C', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -34,11 +34,14 @@ class PDF extends FPDF
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
       $this->Cell(10, 10, utf8_decode('ID'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, utf8_decode('PUNTUACION'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, utf8_decode('STATUS'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, utf8_decode('ID CLIENTE'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, utf8_decode('FECHA'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, utf8_decode('HORA'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, utf8_decode('STATUS'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('PRECIO'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('DURACION'), 1, 0, 'C', 1);
       $this->Cell(40, 10, utf8_decode('NOMBRE CLIENTE'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, utf8_decode('APELLIDO CLIENTE'), 1, 1, 'C', 1);
+      $this->Cell(40, 10, utf8_decode('APELLIDO CLIENTE'), 1, 0, 'C', 1);
+      $this->Cell(40, 10, utf8_decode('CATEGORIA'), 1, 1, 'C', 1);
    }
 
    // Pie de página
@@ -71,23 +74,28 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 
 include "../clases/Conexion.php";
-include "../clases/Review.php";
-$Review = new Review();
+include "../clases/Employee.php";
+$Employee = new Employee();
+
+$employeeId = $_GET["txtId"];
 
 // Obtiene todas las reseñas
-$reviews = $Review->getBarberReviews();
+$employees= $Employee->getAppointmentWithServiceData($employeeId);
 
 // Itera sobre las reseñas
-foreach ($reviews as $review) {
-    $pdf->Cell(10, 10, utf8_decode($review['id_Resena_Barberia']), 1, 0, 'C', 0);
-    $pdf->Cell(40, 10, utf8_decode($review['Puntuacion']), 1, 0, 'C', 0);
-    $pdf->Cell(40, 10, utf8_decode($review['status']), 1, 0, 'C', 0);
-    $pdf->Cell(40, 10, utf8_decode($review['id_Cliente']), 1, 0, 'C', 0);
-    $pdf->Cell(40, 10, utf8_decode($review['Nombre']), 1, 0, 'C', 0);
-    $pdf->Cell(40, 10, utf8_decode($review['Apellido']), 1, 1, 'C', 0);
+foreach ($employees as $employee) {
+    $pdf->Cell(10, 10, utf8_decode($employee['id_Citas']), 1, 0, 'C', 0);
+    $pdf->Cell(30, 10, utf8_decode($employee['Fecha_Cita']), 1, 0, 'C', 0);
+    $pdf->Cell(30, 10, utf8_decode($employee['Hora_Inicio']), 1, 0, 'C', 0);
+    $pdf->Cell(30, 10, utf8_decode($employee['status']), 1, 0, 'C', 0);
+    $pdf->Cell(20, 10, utf8_decode($employee['Precio']), 1, 0, 'C', 0);
+    $pdf->Cell(20, 10, utf8_decode($employee['Duracion']), 1, 0, 'C', 0);
+    $pdf->Cell(40, 10, utf8_decode($employee['Nombre']), 1, 0, 'C', 0);
+    $pdf->Cell(40, 10, utf8_decode($employee['Apellido']), 1, 0, 'C', 0);
+    $pdf->Cell(40, 10, utf8_decode($employee['Categoria']), 1, 1, 'C', 0);
 }
 
-$pdf->Output('reporteReseñas.pdf', 'I');
+$pdf->Output('reporteEmpleadosCitas.pdf', 'I');
 
 
 

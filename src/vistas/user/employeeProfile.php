@@ -8,22 +8,14 @@
         session_start();}
         
         $Employee= new Employee();
-        $Citas= new Citas();
 
         $user= $Employee->getEmployeeById($_SESSION['employee_id']);
 
+        $employeeId = $_SESSION['employee_id'];
+
         $tblCitas = $Employee->getAppointmentWithServiceData($_SESSION['employee_id']);
 
-        if(isset($_GET['txtID'])){
-            $deleteID = $_GET['txtID'];
-            $Citas= $Citas->cancelarCita($deleteID);
-            if($Citas){
-                echo "<script>Swal.fire('Cita cancelada exitosamente')</script>";
-            }else{
-                echo "<script>Swal.fire('Error al cancelar cita')</script>";
-            }
-            
-        }
+    
 ?>
 
 <head>
@@ -86,7 +78,10 @@
                
             <div class="mt-4 flex flex-col w-full 2xl:w-2/3">
                 <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-                    <h4 class="text-xl text-gray-900 font-bold">Reporte de Citas realizadas</h4>
+                    <h4 class="text-xl mb-6 text-gray-900 font-bold">Reporte de Citas realizadas</h4>
+                    <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href=<?php echo "../../fpdf/employeeCitas.php?txtId=".$employeeId?> >
+                    Generar reporte de citas realizadas
+                    </a>
                     <table class="mt-4 min-w-full border-collapse block md:table">
 		<thead class="block md:table-header-group">
 			<tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto md:relative ">
@@ -143,8 +138,8 @@
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
                         <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
                             <div class="flex items-center justify-between">
-                                <span class="font-bold text-sm text-indigo-600">Total Revenue</span>
-                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
+                                <span class="font-bold text-sm text-indigo-600">Ganacias De la semana</span>
+                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">Últimos 7 días</span>
                             </div>
                             <div class="flex items-center justify-between mt-6">
                                 <div>
@@ -152,7 +147,7 @@
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="flex items-end">
-                                        <span class="text-2xl 2xl:text-3xl font-bold">$8,141</span>
+                                        <span class="text-2xl 2xl:text-3xl font-bold">$56,23</span>
                                         <div class="flex items-center ml-2 mb-1">
                                             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                                             <span class="font-bold text-sm text-gray-500 ml-0.5">3%</span>
@@ -163,8 +158,8 @@
                         </div>
                         <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
                             <div class="flex items-center justify-between">
-                                <span class="font-bold text-sm text-green-600">New Orders</span>
-                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
+                                <span class="font-bold text-sm text-green-600">Nuevas Citas</span>
+                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">Últimos 7 días</span>
                             </div>
                             <div class="flex items-center justify-between mt-6">
                                 <div>
@@ -172,7 +167,7 @@
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="flex items-end">
-                                        <span class="text-2xl 2xl:text-3xl font-bold">217</span>
+                                        <span class="text-2xl 2xl:text-3xl font-bold">7</span>
                                         <div class="flex items-center ml-2 mb-1">
                                             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                                             <span class="font-bold text-sm text-gray-500 ml-0.5">5%</span>
@@ -183,8 +178,8 @@
                         </div>
                         <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
                             <div class="flex items-center justify-between">
-                                <span class="font-bold text-sm text-blue-600">New Connections</span>
-                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
+                                <span class="font-bold text-sm text-blue-600">Nuevos Clientes</span>
+                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">Ultimos 7 días</span>
                             </div>
                             <div class="flex items-center justify-between mt-6">
                                 <div>
@@ -192,7 +187,7 @@
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="flex items-end">
-                                        <span class="text-2xl 2xl:text-3xl font-bold">54</span>
+                                        <span class="text-2xl 2xl:text-3xl font-bold">4</span>
                                         <div class="flex items-center ml-2 mb-1">
                                             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                                             <span class="font-bold text-sm text-gray-500 ml-0.5">7%</span>

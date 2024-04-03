@@ -24,7 +24,7 @@ class PDF extends FPDF
       $this->SetTextColor(228, 100, 0);
       $this->Cell(100); // mover a la derecha
       $this->SetFont('Arial', 'B', 15);
-      $this->Cell(100, 10, utf8_decode("REPORTE DE RESEÑAS DEL EMPLEADO"), 0, 1, 'C', 0);
+      $this->Cell(100, 10, utf8_decode("REPORTE DE RESEÑAS "), 0, 1, 'C', 0);
       $this->Ln(7);
 
       /* CAMPOS DE LA TABLA */
@@ -34,8 +34,14 @@ class PDF extends FPDF
       $this->SetDrawColor(163, 163, 163); //colorBorde
       $this->SetFont('Arial', 'B', 11);
       $this->Cell(10, 10, utf8_decode('ID'), 1, 0, 'C', 1);
-      $this->Cell(40, 10, utf8_decode('PUNTUACION'), 1, 0, 'C', 1);
-      $this->Cell(80, 10, utf8_decode('DESCRIPCION'), 1, 1, 'C', 1);
+      $this->Cell(30, 10, utf8_decode('FECHA'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, utf8_decode('HORA'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, utf8_decode('STATUS'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('PRECIO'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('DURACION'), 1, 0, 'C', 1);
+      $this->Cell(40, 10, utf8_decode('CATEGORIA'), 1, 0, 'C', 1);
+      $this->Cell(45, 10, utf8_decode('NOMBRE EMPLEADO'), 1, 0, 'C', 1);
+      $this->Cell(45, 10, utf8_decode('APELLIDO EMPLEADO'), 1, 1, 'C', 1);
    }
 
    // Pie de página
@@ -68,24 +74,26 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 
 include "../clases/Conexion.php";
-include "../clases/Review.php";
-$Review = new Review();
+include "../clases/Citas.php";
 
-$employeeId = $_GET["txtId"];
-
-// Obtiene todas las reseñas
-$reviews = $Review->getReviewsByEmployee($employeeId);
-
+$Citas = new Citas(); 
+$tblCitas = $Citas->getCitasReport($_GET['txtId']);
 
 
 // Itera sobre las reseñas
-foreach ($reviews as $review) {
-    $pdf->Cell(10, 20, utf8_decode($review['Id_Resena_Empleado']), 1, 0, 'C', 0);
-    $pdf->Cell(40, 20, utf8_decode($review['Puntuacion']), 1, 0, 'C', 0);
-    $pdf->MultiCell(80, 20, utf8_decode($review['Descripcion']), 1, 'C');
+foreach ($tblCitas as $cita) {
+    $pdf->Cell(10, 10, utf8_decode($cita['id_Citas']), 1, 0, 'C', 0);
+    $pdf->Cell(30, 10, utf8_decode($cita['Fecha_Cita']), 1, 0, 'C', 0);
+    $pdf->Cell(30, 10, utf8_decode($cita['Hora_Inicio']), 1, 0, 'C', 0);
+    $pdf->Cell(30, 10, utf8_decode($cita['status']), 1, 0, 'C', 0);
+    $pdf->Cell(20, 10, utf8_decode($cita['Precio']), 1, 0, 'C', 0);
+    $pdf->Cell(20, 10, utf8_decode($cita['Duracion']), 1, 0, 'C', 0);
+    $pdf->Cell(40, 10, utf8_decode($cita['Categoria']), 1, 0, 'C', 0);
+    $pdf->Cell(45, 10, utf8_decode($cita['nombreEmpleado']), 1, 0, 'C', 0);
+    $pdf->Cell(45, 10, utf8_decode($cita['apellidoEmpleado']), 1, 1, 'C', 0);
 }
 
-$pdf->Output('reporteReviewsEmpleado.pdf', 'I');
+$pdf->Output('reporteCitasCliente.pdf', 'I');
 
 
 

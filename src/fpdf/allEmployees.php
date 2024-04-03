@@ -89,7 +89,7 @@ foreach ($employees as $employee) {
     $pdf->Cell(20, 10, utf8_decode($employee['promedio_Puntuacion']), 1, 1, 'C', 0);
 }
 
-$pdf->Output('reporteReseñas.pdf', 'I');
+$pdf->Output('reporteEmployees.pdf', 'I');
 
 
 

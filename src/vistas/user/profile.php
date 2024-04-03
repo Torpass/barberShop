@@ -10,6 +10,8 @@
         $Client= new Client();
         $Citas= new Citas();
 
+        $clientId = $_SESSION['user_id'];
+
         $user= $Client->getClientById($_SESSION['user_id']);
 
         $tblCitas = $Citas->getCitas($_SESSION['user_id']);
@@ -41,7 +43,7 @@
                 <img src="https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg" class="w-full h-full rounded-tl-lg rounded-tr-lg">
             </div>
             <div class="flex flex-col items-center -mt-20">
-                <img src="https://vojislavd.com/ta-template-demo/assets/img/profile.jpg" class="w-40 border-4 border-white rounded-full">
+                <img src="https://th.bing.com/th/id/R.19e104bef8756cd73c7ddbd9b2ae2043?rik=U65n%2fLOhHWpdqA&pid=ImgRaw&r=0" class="w-40 border-4 border-white rounded-full">
                 <div class="flex items-center space-x-2 mt-2">
                     <p class="text-2xl"><?php echo $user["Nombre"]." ".$user["Apellido"]?></p>
                     <span class="bg-blue-500 rounded-full p-1" title="Verified">
@@ -86,7 +88,10 @@
                
             <div class="mt-4 flex flex-col w-full 2xl:w-2/3">
                 <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-                    <h4 class="text-xl text-gray-900 font-bold">Reporte de Citas realizadas</h4>
+                    <h4 class="mb-16 text-xl text-gray-900 font-bold">Reporte de Citas realizadas</h4>
+                    <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href=<?php echo "../../fpdf/clientCitas.php?txtId=".$clientId?> >
+                    Generar reporte de citas realizadas
+                    </a>
                     <table class="mt-4 min-w-full border-collapse block md:table">
 		<thead class="block md:table-header-group">
 			<tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto md:relative ">
@@ -134,19 +139,13 @@
 					</td>
 					<td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
 						<span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                        <?
+                        <?php
                         if($cita["status"] == "En Espera"):
                         ?>
                             <a
                             href="./profile.php?txtID=<?php echo $cita["id_Citas"] ?>"
                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Cancelar</a>
-                        <?
-                        elseif($cita["status"] == "Terminado"):
-                        ?>
-                            <a
-                            href="./profile.php?txtID=<?php echo $cita["id_Citas"] ?>"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded">Calificar</a>
-                        <?
+                        <?php
                         endif;
                         ?>
 					</td>
@@ -164,8 +163,8 @@
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
                         <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
                             <div class="flex items-center justify-between">
-                                <span class="font-bold text-sm text-indigo-600">Total Revenue</span>
-                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
+                                <span class="font-bold text-sm text-indigo-600">Dinero ahorrado con nuestras promociones</span>
+                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">Últimos 30 díás</span>
                             </div>
                             <div class="flex items-center justify-between mt-6">
                                 <div>
@@ -173,10 +172,10 @@
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="flex items-end">
-                                        <span class="text-2xl 2xl:text-3xl font-bold">$8,141</span>
+                                        <span class="text-2xl 2xl:text-3xl font-bold">$31,23</span>
                                         <div class="flex items-center ml-2 mb-1">
                                             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                                            <span class="font-bold text-sm text-gray-500 ml-0.5">3%</span>
+                                            <span class="font-bold text-sm text-gray-500 ml-0.5">23%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -184,8 +183,8 @@
                         </div>
                         <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
                             <div class="flex items-center justify-between">
-                                <span class="font-bold text-sm text-green-600">New Orders</span>
-                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
+                                <span class="font-bold text-sm text-green-600">Nuevas citas</span>
+                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">Últimos 7 días</span>
                             </div>
                             <div class="flex items-center justify-between mt-6">
                                 <div>
@@ -193,7 +192,7 @@
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="flex items-end">
-                                        <span class="text-2xl 2xl:text-3xl font-bold">217</span>
+                                        <span class="text-2xl 2xl:text-3xl font-bold">6</span>
                                         <div class="flex items-center ml-2 mb-1">
                                             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                                             <span class="font-bold text-sm text-gray-500 ml-0.5">5%</span>
@@ -202,23 +201,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-sm text-blue-600">New Connections</span>
-                                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
-                            </div>
-                            <div class="flex items-center justify-between mt-6">
-                                <div>
-                                    <svg class="w-12 h-12 p-2.5 bg-blue-400 bg-opacity-20 rounded-full text-blue-600 border border-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="flex items-end">
-                                        <span class="text-2xl 2xl:text-3xl font-bold">54</span>
-                                        <div class="flex items-center ml-2 mb-1">
-                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                                            <span class="font-bold text-sm text-gray-500 ml-0.5">7%</span>
-                                        </div>
-                                    </div>
+                        
                                 </div>
                             </div>
                         </div>
