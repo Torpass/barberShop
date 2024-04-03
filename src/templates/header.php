@@ -83,11 +83,17 @@
                   href="'.$base_url.'src/vistas/employee/">Panel Empleados</a>
                 ';
               }
-            
             ?>
-            
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" 
-            href=<?php echo $base_url."src/vistas/user/profile.php"?>>Perfil</a>
+            <?php if($user_role == 0 || $user_role == 2):?>
+              <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" 
+              href=<?php echo $base_url."src/vistas/user/profile.php"?>>Perfil</a>
+            <?php endif;?>
+
+            <?php if($user_role == 1):?>
+              <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" 
+              href=<?php echo $base_url."src/vistas/user/employeeProfile.php"?>>Perfil</a>
+            <?php endif;?>
+
           </div>
         </div>
       </div>    

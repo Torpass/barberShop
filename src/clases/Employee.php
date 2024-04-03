@@ -161,5 +161,48 @@ class Employee extends ConexionSQL{
         }
         
     }
+    public function getAppointmentWithServiceData($idEmpleado){
+            $sql = "SELECT citas.id_Citas, citas.Fecha_Cita, citas.Hora_Inicio, citas.status, 
+            servicios.Precio, servicios.Duracion, 
+            clientes.Nombre, clientes.Apellido, 
+            servicios_categoria.nombre as Categoria
+             FROM citas
+             INNER JOIN clientes ON citas.id_Cliente = clientes.id_Cliente
+             INNER JOIN servicios_reservados ON citas.id_Citas = servicios_reservados.Id_Cita
+             INNER JOIN servicios ON servicios_reservados.Id_Servicio = servicios.id_Servicio
+             INNER JOIN servicios_categoria ON servicios.Id_Categoria = servicios_categoria.Id_Categoria
+             WHERE citas.Id_Empleado= :idEmpleado";
+        $query = $this->conexion->prepare($sql);
+        $query->bindParam(':idEmpleado', $idEmpleado);
+        
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            echo "nao nao";
+        }
+    }
+
+
+    public function getWaitingAppointmentWithServiceData($idEmpleado){
+        $sql = "SELECT citas.id_Citas, citas.Fecha_Cita, citas.Hora_Inicio, citas.status, 
+        servicios.Precio, servicios.Duracion, 
+        clientes.Nombre, clientes.Apellido, 
+        servicios_categoria.nombre as Categoria
+         FROM citas
+         INNER JOIN clientes ON citas.id_Cliente = clientes.id_Cliente
+         INNER JOIN servicios_reservados ON citas.id_Citas = servicios_reservados.Id_Cita
+         INNER JOIN servicios ON servicios_reservados.Id_Servicio = servicios.id_Servicio
+         INNER JOIN servicios_categoria ON servicios.Id_Categoria = servicios_categoria.Id_Categoria
+         WHERE citas.Id_Empleado= :idEmpleado
+         AND citas.status = 'En Espera'";
+    $query = $this->conexion->prepare($sql);
+    $query->bindParam(':idEmpleado', $idEmpleado);
+    
+    if($query->execute()){
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }else{
+        echo "nao nao";
+    }
+}
 }
 
