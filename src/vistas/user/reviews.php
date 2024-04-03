@@ -6,6 +6,7 @@
     $Review = new Review();
     $employeeID = $_GET['txtId'];
     $employeeReviews = $Review->getReviewsByEmployee($employeeID);
+    $user_role = $_SESSION["user_role"];
 ?>
 
 <link
@@ -16,6 +17,7 @@
 
 <h1 class="mt-10 mb-2 block font-sans text-4xl font-bold leading-snug tracking-normal text-blue-gray-900 antialiased" >Reseñas del empleado</h1>
 <div class="p-6 pt-0">
+  <?php if(!$user_role == 1):?>
     <a
       class="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       type="button"
@@ -24,6 +26,7 @@
     >
       Añadir Reseña
     </a>
+    <?php endif?>
   </div>
 <section class="grid grid-cols-4 sm:px-5 gap-x-8 gap-y-16 mt-10">
     <?php foreach ($employeeReviews as $review): ?>

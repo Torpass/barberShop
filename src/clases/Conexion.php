@@ -6,7 +6,7 @@ class ConexionSQL {
     private $servidor = "localhost";
     private $usuario = "root";
     private $contraseña = "Pas080604";
-    private $base_datos = "barber";
+    private $base_datos = "barbershop";
     protected $conexion;
   
     // Constructor
