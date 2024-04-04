@@ -36,7 +36,6 @@ if(isset($_POST['btnRegistrar'])){
     }elseif (!isset($_POST['txtHorarios']) || $_POST['txtHorarios'] === '') {
         echo "<script>Swal.fire('El campo Horarios es obligatorio.')</script>";
     }else {
-
         $nombre = $_POST['txtNombre'];
         $apellido = $_POST['txtApellido'];
         $cedula = $_POST['txtCedula'];
@@ -57,6 +56,7 @@ if(isset($_POST['btnRegistrar'])){
 
 <head>
     <link href="../../output.css" rel="stylesheet">
+
 </head>
 <body>
     <!-- component -->
@@ -68,33 +68,33 @@ if(isset($_POST['btnRegistrar'])){
             <!-- input name -->
             <div>
                 <label class="text-white dark:text-gray-200" for="txtNombre">Nombre</label>
-                <input id="username" type="text" name="txtNombre" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input id="txtNombre" type="text" name="txtNombre" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
             <!-- input lastname -->
             <div>
                 <label class="text-white dark:text-gray-200" for="txtApellido">Apellido</label>
-                <input id="emailAddress" type="input" name="txtApellido" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input id="txtApellido" type="input" name="txtApellido" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="password">Cédula</label>
-                <input id="password" type="input" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input id="txtCedula" type="number" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Email</label>
-                <input id="" type="email" name="txtEmail" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input id="txtEmail" type="email" name="txtEmail" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Teléfono</label>
-                <input id="" type="input" name="txtTelefono" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <input id="txtTelefono" type="number" name="txtTelefono" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
 
 
             <div class="mt-4">
                 <label class="text-white dark:text-gray-200" for="horarios">Horarios de Trabajo</label>
-                <select id="horarios" name="txtHorarios[]" multiple class="block w-full px-4 py-2 mt-2 text-gray-70 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
+                <select id="txtHorarios" name="txtHorarios[]" multiple class="block w-full px-4 py-2 mt-2 text-gray-70 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
                 bg-gray-100">
                     <option value="1" class="mt-2">Lunes 8:00:00am | 5:00:00pm</option>
                     <option value="2" class="mt-2">Martes 8:00:00am | 5:00:00pm</option>
@@ -112,7 +112,7 @@ if(isset($_POST['btnRegistrar'])){
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Descripción</label>
-                <textarea id="textarea" type="textarea" name="txtDescripcion" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                <textarea id="txtDescripcion" type="textarea" name="txtDescripcion" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
             </div>
         </div>
 
@@ -123,6 +123,7 @@ if(isset($_POST['btnRegistrar'])){
 </section>
 
 
+<script src="../../validators/createEmployee.js" ></script>
 </body>
 </html>
 <script>
@@ -130,33 +131,4 @@ if(isset($_POST['btnRegistrar'])){
         const checkbox = document.getElementById(id);
         checkbox.checked = !checkbox.checked;
     }
-</script>
-
-<script>
-function validateForm() {
-    var telefono = document.getElementById('txtTelefono').value;
-    var nombre = document.getElementById('txtNombre').value;
-    var apellido = document.getElementById('txtApellido').value;
-    var cedula = document.getElementById('txtCedula').value;
-    var email = document.getElementById('txtEmail').value;
-    var descripcion = document.getElementById('txtDescripcion').value;
-    var horarios = document.getElementById('txtHorarios').value;
-
-    if (!telefono.startsWith('04') || telefono.length !== 11) {
-        Swall.fire('El número de teléfono debe empezar por 04 y contener exactamente 11 caracteres.');
-        return false;
-    }
-
-    if (!nombre || !apellido || !cedula || !email || !descripcion || !horarios) {
-        Swal.fire('Todos los campos deben estar llenos');
-        return false;
-    }
-
-    if (descripcion.length > 250) {
-        alert('La descripción no debe superar los 250 caracteres.');
-        return false;
-    }
-
-    return true;
-}
 </script>

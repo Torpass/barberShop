@@ -76,34 +76,35 @@ if(isset($_POST['btnRegistrar'])){
     <form method="post" action="">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <!-- input name -->
+
             <div>
                 <label class="text-white dark:text-gray-200" for="txtNombre">Nombre</label>
-                <input id="username" type="text" name="txtNombre" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                <input id="txtNombre" type="text" name="txtNombre" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value= <?php echo $employee["Nombre"]?>
                 >
             </div>
             <!-- input lastname -->
             <div>
                 <label class="text-white dark:text-gray-200" for="txtApellido">Apellido</label>
-                <input id="emailAddress" type="input" name="txtApellido" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                <input id="txtEmail" type="input" name="txtApellido" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value= <?php echo $employee["Apellido"]?>>
             </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="password">Cédula</label>
-                <input id="password" type="input" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                <input id="TxtCedula" type="input" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value= <?php echo $employee["Cedula"]?>>
             </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Email</label>
-                <input id="" type="email" name="txtEmail" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                <input id="txtEmail" type="email" name="txtEmail" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value= <?php echo $employee["Gmail"]?>>
             </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Teléfono</label>
-                <input id="" type="input" name="txtTelefono" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                <input id="txtTelefono" type="number" name="txtTelefono" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value= <?php echo $employee["Telefono"]?>
                 >
             </div>
@@ -111,7 +112,7 @@ if(isset($_POST['btnRegistrar'])){
 
             <div class="mt-4">
                 <label class="text-white dark:text-gray-200" for="horarios">Horarios de Trabajo</label>
-                <select id="horarios" name="txtHorarios[]" multiple class="block w-full px-4 py-2 mt-2 text-gray-70 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
+                <select id="txtHorarios" name="txtHorarios[]" multiple class="block w-full px-4 py-2 mt-2 text-gray-70 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
                 bg-gray-100">
                     <option value="1" class="mt-2">Lunes 8:00:00am | 5:00:00pm</option>
                     <option value="2" class="mt-2">Martes 8:00:00am | 5:00:00pm</option>
@@ -129,7 +130,7 @@ if(isset($_POST['btnRegistrar'])){
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Descripción</label>
-                <textarea id="textarea" type="textarea" name="txtDescripcion" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                <textarea id="txtDescripcion" type="textarea" name="txtDescripcion" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                     <?php echo $employee["descripcion"]?>
                 </textarea>
             </div>
@@ -142,6 +143,7 @@ if(isset($_POST['btnRegistrar'])){
 </section>
 
 
+<script src="../../validators/createEmployee.js" ></script>
 </body>
 </html>
 <script>
