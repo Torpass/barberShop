@@ -29,4 +29,26 @@ class Admin extends ConexionSQL{
             return false;
         }
     }
+
+
+    public function generateEmployeePuntationAverage(){
+        $sql = "SELECT 
+        e.Nombre,
+        e.Apellido,
+        AVG(re.Puntuacion) AS Promedio_Puntuacion
+        FROM 
+        Empleado e
+        LEFT JOIN 
+        resenas_empleados re ON e.Id_Empleado = re.Id_Empleado
+        GROUP BY 
+        e.Id_Empleado, e.Nombre, e.Apellido;
+        ";
+
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
 }
