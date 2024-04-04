@@ -44,6 +44,7 @@ class Admin extends ConexionSQL{
         e.Id_Empleado, e.Nombre, e.Apellido;
         ";
 
+
         $query = $this->conexion->prepare($sql);
         if($query->execute()){
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -51,4 +52,31 @@ class Admin extends ConexionSQL{
             return false;
         }
     }
+
+    public function reportCitasByPerEmployee(){
+        $sql="SELECT 
+        e.Id_Empleado,
+        e.Nombre,
+        e.Apellido,
+        e.Cedula,
+        SUM(CASE WHEN c.status = 'En espera' THEN 1 ELSE 0 END) AS servicios_en_espera,
+        SUM(CASE WHEN c.status = 'Terminado' THEN 1 ELSE 0 END) AS servicios_terminados,
+        SUM(CASE WHEN c.status = 'Cancelado' THEN 1 ELSE 0 END) AS servicios_cancelados,
+        COUNT(*) AS total_servicios
+        FROM 
+        citas c
+        INNER JOIN 
+        empleado e ON c.Id_Empleado = e.Id_Empleado
+        GROUP BY 
+        e.Id_Empleado, e.Nombre, e.Apellido, e.Cedula";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else  {
+            return false;
+        }
+    }
+    
+
+
 }

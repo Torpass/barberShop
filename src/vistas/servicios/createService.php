@@ -6,7 +6,6 @@
     $Services= new Service();
     $tblCategoryServices= $Services->getAllCategoryServices(); 
     if(isset($_POST['btnRegistrar'])){
-
         if (!isset($_POST['txtPrecio']) || $_POST['txtPrecio'] === '') {
             echo "<script>Swal.fire('El precio del servicio es obligatorio')</script>";
         } elseif (!is_numeric($_POST['txtPrecio'])) {
@@ -28,6 +27,7 @@
                 $duracion = $_POST['txtDuracion'];
                 $detalles = $_POST['txtDetalles'];
                 $categoria = $_POST['txtCategoria'];
+                
                 $foto = $_FILES['photo']['name'];
                 $ruta = $_FILES['photo']['tmp_name'];
                 $foto = $_FILES['photo']['name'];

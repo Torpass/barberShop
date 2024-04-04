@@ -46,7 +46,7 @@ if(isset($_POST['btnRegistrar'])){
 
         if($Employees->createEmployee($nombre, $apellido, $cedula, $telefono, $email, $descripcion, $horarios)){
             echo "<script>Swal.fire('Empleado registrado correctamente')</script>";
-        }else{
+        }else{  
             echo "<script>Swal.fire('Error al registrar el empleado')</script>";
         }
     }
