@@ -35,10 +35,10 @@ class Admin extends ConexionSQL{
         $sql = "SELECT 
         e.Nombre,
         e.Apellido,
-        AVG(re.Puntuacion) AS Promedio_Puntuacion
+        round(AVG(re.Puntuacion), 2) AS Promedio_Puntuacion
         FROM 
         Empleado e
-        INNER JOIN 
+        inner JOIN 
         resenas_empleados re ON e.Id_Empleado = re.Id_Empleado
         GROUP BY 
         e.Id_Empleado, e.Nombre, e.Apellido;
