@@ -38,7 +38,7 @@ class Admin extends ConexionSQL{
         AVG(re.Puntuacion) AS Promedio_Puntuacion
         FROM 
         Empleado e
-        LEFT JOIN 
+        INNER JOIN 
         resenas_empleados re ON e.Id_Empleado = re.Id_Empleado
         GROUP BY 
         e.Id_Empleado, e.Nombre, e.Apellido;
