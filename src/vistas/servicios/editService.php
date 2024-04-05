@@ -59,7 +59,7 @@
                     <!-- Precio del servicio -->
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Precio</label>
-						<input id="postContent" name="txtPrecio" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Precio del servicio..." 
+						<input type="number" min="1" max="100" id="txtPrecio" name="txtPrecio" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Precio del servicio..." 
                         value=<?php echo $service["Precio"]?>>
                     </input>
 					</div>
@@ -67,14 +67,14 @@
                     <!-- Duración del servicio -->
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Duracion</label>
-						<input id="postContent" name="txtDuracion" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="¿Cuanto dura el servicio?"
+						<input type="number" min="3" max="200" id="txtDuracion" name="txtDuracion" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="¿Cuanto dura el servicio?"
                         value=<?php echo $service["Duracion"]?>></input>
 					</div>
 
                     <!-- Detalles del servicio -->
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Detalles</label>
-						<textarea id="postContent" name="txtDetalles" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500">
+						<textarea id="txtDetalles" name="txtDetalles" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500">
                             <?php echo $service["Detalle"]?>
                         </textarea>
 					</div>
@@ -117,5 +117,6 @@
 				</form>
 			</div>
 		</div>
+        <script src="../../validators/createServices.js"></script>
 </body>
 </html>
