@@ -229,5 +229,32 @@ class Admin extends ConexionSQL{
             return false;
         }
     }
+    public function getLastApointments(){
+        $sql="SELECT 
+        c.id_Citas,
+        c.status,
+        c.Fecha_Creacion,
+        sc.nombre AS nombre_servicio,
+        s.Precio,
+        sc.nombre AS nombre_categoria
+        FROM 
+            citas c
+        JOIN 
+            servicios_reservados sr ON c.Id_Citas = sr.Id_Cita
+        JOIN 
+            servicios s ON sr.Id_Servicio = s.id_Servicio
+        JOIN 
+            servicios_categoria sc ON s.Id_Categoria = sc.Id_Categoria
+        ORDER BY 
+            c.Fecha_Creacion DESC
+        LIMIT 8;";
+    $query = $this->conexion->prepare($sql);
+    if($query->execute()){
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }else{
+        return false;
+    }
+    }
+    
 
 }
