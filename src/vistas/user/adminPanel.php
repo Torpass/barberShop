@@ -22,6 +22,7 @@
 <?php
 include("../../clases/Conexion.php");
 include("../../clases/Admin.php");
+$base_url = "localhost/barberShop/";
 $Admin = new Admin();
 $puntuaciones = $Admin->reportPuntuacionBarberia();
 $avgAge = $Admin->getAvgAge();
@@ -33,7 +34,8 @@ $lastsApoitments = $Admin->getLastApointments();
 <body class="text-gray-800 font-inter">
     <!--sidenav -->
     <div class="fixed left-0 top-0 w-64 h-full bg-[#f8f4f3] p-4 z-50 sidebar-menu transition-transform">
-        <a href="#" class="flex items-center pb-4 border-b border-b-gray-800">
+        <a href="../../../"
+         class="flex items-center pb-4 border-b border-b-gray-800">
 
             <h2 class="font-bold text-2xl">BARBER <span class="bg-indigo-600 text-white px-2 rounded-md">SHOP</span></h2>
         </a>
@@ -113,13 +115,13 @@ $lastsApoitments = $Admin->getLastApointments();
                     <button type="button" class="dropdown-toggle flex items-center">
                         <div class="flex-shrink-0 w-10 h-10 relative">
                             <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
-                                <img class="w-8 h-8 rounded-full" src="https://laravelui.spruko.com/tailwind/ynex/build/assets/images/faces/9.jpg" alt=""/>
+                                <img class="w-8 h-8 rounded-full" src="https://th.bing.com/th/id/R.19e104bef8756cd73c7ddbd9b2ae2043?rik=U65n%2fLOhHWpdqA&pid=ImgRaw&r=0" alt=""/>
                                 <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
                                 <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
                             </div>
                         </div>
                         <div class="p-2 md:block text-left">
-                            <h2 class="text-sm font-semibold text-gray-800">John Doe</h2>
+                            <h2 class="text-sm font-semibold text-gray-800">Admin</h2>
                             <p class="text-xs text-gray-500">Administrator</p>
                         </div>                
                     </button>
