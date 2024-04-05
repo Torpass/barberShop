@@ -25,6 +25,7 @@ include("../../clases/Admin.php");
 $Admin = new Admin();
 $puntuaciones = $Admin->reportPuntuacionBarberia();
 $avgAge = $Admin->getAvgAge();
+$totalClients = $Admin->getAllRegisteredClients();
 ?>
 <body class="text-gray-800 font-inter">
     <!--sidenav -->
@@ -149,7 +150,7 @@ $avgAge = $Admin->getAvgAge();
                     <div class="flex justify-between mb-6">
                         <div>
                             <div class="flex items-center mb-1">
-                                <div class="text-2xl font-semibold"><?php echo $puntuaciones[0]["puntuacion"]?></div>
+                                <div class="text-2xl font-semibold"><?php echo $puntuaciones[0]["puntuacion"]." / 5 ⭐"?></div>
                             </div>
                             <div class="text-sm font-medium text-gray-400">Promedio clasificación barberia</div>
                         </div>
@@ -205,8 +206,8 @@ $avgAge = $Admin->getAvgAge();
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
                     <div class="flex justify-between mb-6">
                         <div>
-                            <div class="text-2xl font-semibold mb-1">100</div>
-                            <div class="text-sm font-medium text-gray-400">Blogs</div>
+                            <div class="text-2xl font-semibold mb-1"><?php echo $totalClients["cantidad_clientes_registrados"]?></div>
+                            <div class="text-sm font-medium text-gray-400">Total clientes registrados</div>
                         </div>
                          <div class="dropdown">
                             <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
@@ -223,7 +224,10 @@ $avgAge = $Admin->getAvgAge();
                             </ul>
                         </div> 
                     </div>
-                    <a href="" class="text-indigo-500 font-medium text-sm hover:text-indigo-800">View</a>
+                    <a
+                    target="_blank" 
+                    href="../../fpdf/allClients.php" 
+                    class="text-indigo-500 font-medium text-sm hover:text-indigo-800">Ver</a>
                 </div>
             </div>
           <!-- end of card panel  -->

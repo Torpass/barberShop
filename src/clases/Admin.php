@@ -154,4 +154,41 @@ class Admin extends ConexionSQL{
         }
     }
 
+
+    public function getAllRegisteredClients(){
+        $sql = "SELECT 
+        COUNT(*) AS cantidad_clientes_registrados
+        FROM 
+        clientes;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+           return false;
+        }
+    }
+
+    public function getAllClients(){
+        $sql = "SELECT 
+        c.Id_Cliente,
+        c.Nombre,
+        c.Apellido,
+        c.Cedula,
+        c.edad,
+        co.Telefono,
+        co.Gmail
+        FROM 
+        clientes c
+        JOIN 
+        contacto co ON co.id_Contacto= c.id_Contacto;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
 }
