@@ -49,7 +49,7 @@
 
                     <div class="mb-6">
 						<label for="postContent" class="block text-gray-700 text-sm font-bold mb-2">Reseña</label>
-						<textarea id="postContent" type="textarea" name="txtReview" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Reseña..."></textarea>
+						<textarea id="txtReview" type="textarea" name="txtReview" rows="4" class="w-full border-2 rounded-md px-4 py-2 leading-5 transition duration-150 ease-in-out sm:text-sm sm:leading-5 resize-none focus:outline-none focus:border-blue-500" placeholder="Reseña..."></textarea>
 					</div>
 
 					<!-- Submit Button and Character Limit Section -->
@@ -65,5 +65,6 @@
 				</form>
 			</div>
 		</div>
+        <script src="../../validators/createReview.js"></script>
 </body>
 </html>
