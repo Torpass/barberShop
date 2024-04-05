@@ -191,4 +191,43 @@ class Admin extends ConexionSQL{
         }
     }
 
+    public function getClientsWithMoreApointments(){
+        $sql="SELECT 
+        c.id_Cliente,
+        cl.Nombre,
+        cl.Apellido,
+        COUNT(*) AS cantidad_citas_realizadas
+        FROM 
+        citas c
+        JOIN 
+        clientes cl ON c.id_Cliente = cl.id_Cliente
+        GROUP BY 
+        c.id_Cliente, cl.Nombre, cl.Apellido
+        ORDER BY 
+        COUNT(*) DESC
+        LIMIT 5;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function getServicesStats(){
+        $sql="SELECT 
+        SUM(CASE WHEN c.status = 'Terminado' THEN 1 ELSE 0 END) AS citas_terminadas,
+        SUM(CASE WHEN c.status = 'En espera' THEN 1 ELSE 0 END) AS citas_en_espera,
+        SUM(CASE WHEN c.status = 'Cancelado' THEN 1 ELSE 0 END) AS citas_canceladas
+        FROM 
+        citas c;";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
 }
