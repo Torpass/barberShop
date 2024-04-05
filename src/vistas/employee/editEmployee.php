@@ -78,7 +78,7 @@ if(isset($_POST['btnRegistrar'])){
             <!-- input name -->
             <div>
                 <label class="text-white dark:text-gray-200" for="password">Cédula</label>
-                <input id="TxtCedula" type="input" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                <input id="txtCedula" type="input" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value= <?php echo $employee["Cedula"]?>>
             </div>
 
@@ -91,7 +91,7 @@ if(isset($_POST['btnRegistrar'])){
             <!-- input lastname -->
             <div>
                 <label class="text-white dark:text-gray-200" for="txtApellido">Apellido</label>
-                <input id="txtEmail" type="input" name="txtApellido" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                <input id="txtApellido" type="input" name="txtApellido" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value= <?php echo $employee["Apellido"]?>>
             </div>
 

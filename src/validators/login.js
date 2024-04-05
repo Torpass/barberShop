@@ -45,7 +45,7 @@ cedulaInput.addEventListener("keydown", (e) =>{
         putError(cedulaInput, '¡La cedula debe tener al menos 7 caracteres!');
         return;
     }
-    if(cedulaInput.value.length > 7){
+    if(cedulaInput.value.length >= 9){
         putError(cedulaInput, '¡La cedula no debe tener más de 8 caracteres!');
         if(e.key != 'Backspace'){
             e.preventDefault();
