@@ -28,6 +28,11 @@
     <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
       <h1 class="text-2xl font-semibold mb-4">Regístrate</h1>
       <form action="signUp.php" method="POST">
+          <!-- Cedula Input -->
+          <div class="mb-4">
+          <label for="cedula" class="block text-gray-600">Cedula</label>
+          <input type="cedula" id="cedula" name="txtCedula" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+        </div>
         <!-- Nombre Input -->
         <div class="mb-4">
           <label for="nombre" class="block text-gray-600">Nombre</label>
@@ -37,11 +42,6 @@
         <div class="mb-4">
           <label for="apellido" class="block text-gray-600">Apellido</label>
           <input type="apellido" id="apellido" name="txtApellido" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
-        </div>
-        <!-- Cedula Input -->
-        <div class="mb-4">
-          <label for="cedula" class="block text-gray-600">Cedula</label>
-          <input type="cedula" id="cedula" name="txtCedula" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Email Input -->
         <div class="mb-4">
@@ -53,8 +53,12 @@
           <label for="telefono" class="block text-gray-600">Telefono</label>
           <input type="telefono" id="telefono" name="txtTelefono" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
+         <!-- Cedula Input -->
+         <div class="mb-4">
+          <label for="edad" class="block text-gray-600">Edad</label>
+          <input min="3" max="98" type="number" id="edad" name="txtEdad" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         <!-- Register Button -->
-        <button name="btnRegister" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Registrar</button>
+        <button name="btnRegister" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full mt-10">Registrar</button>
       </form>
       <!-- Sign up  Link -->
       <div class="mt-6 text-blue-500 text-center">
@@ -95,7 +99,8 @@ if(isset($_POST['btnRegister'])){
           $_POST['txtApellido'], 
           $_POST['txtCedula'],
           $_POST['txtTelefono'],
-          $_POST['txtEmail']
+          $_POST['txtEmail'],
+          $_POST["txtEdad"]
       );
       if($usuario){
           $_SESSION['user_id'] = $usuario["id"];

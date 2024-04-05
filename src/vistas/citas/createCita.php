@@ -92,7 +92,7 @@
                 
                 <div class="flex items-center justify-center w-full">
                     <button name="txtRegister" class="mt-9 font-semibold leading-none text-white py-4 px-10 bg-indigo-700 rounded hover:bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:outline-none">
-                        Send message
+                        Enviar cita
                     </button>
                 </div>
             </form>

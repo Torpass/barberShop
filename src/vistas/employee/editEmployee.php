@@ -71,11 +71,16 @@ if(isset($_POST['btnRegistrar'])){
 <body>
     <!-- component -->
 <section class="max-w-4xl mb-12 p-6 mx-auto rounded-md shadow-md dark:bg-gray-800 mt-20">
-    <a class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-500 rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none" href="./index.php">Salir</a>	
+   
     <h1 class="text-xl font-bold text-white capitalize dark:text-white">Crear Empleado</h1>
     <form method="post" action="">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <!-- input name -->
+            <div>
+                <label class="text-white dark:text-gray-200" for="password">Cédula</label>
+                <input id="TxtCedula" type="input" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                value= <?php echo $employee["Cedula"]?>>
+            </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="txtNombre">Nombre</label>
@@ -90,11 +95,6 @@ if(isset($_POST['btnRegistrar'])){
                 value= <?php echo $employee["Apellido"]?>>
             </div>
 
-            <div>
-                <label class="text-white dark:text-gray-200" for="password">Cédula</label>
-                <input id="TxtCedula" type="input" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                value= <?php echo $employee["Cedula"]?>>
-            </div>
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Email</label>
@@ -136,7 +136,8 @@ if(isset($_POST['btnRegistrar'])){
             </div>
         </div>
 
-        <div class="flex justify-end mt-6">
+        <div class="flex justify-between mt-6">
+        <a class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-500 rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none" href="./index.php">Salir</a>	
             <button name="btnRegistrar" class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Actualizar</button>
         </div>
     </form>

@@ -32,7 +32,7 @@ class Client extends ConexionSQL{
         }
     }
 
-    public function signUpClient($firstName, $lastName, $Cedula ,$Telefono, $Gmail){
+    public function signUpClient($firstName, $lastName, $Cedula ,$Telefono, $Gmail, $edad){
         //set the role of the user to client (remenber that 0 is for clients, 1 is for employees and 2 is for admins)
         $role = 0;
 
@@ -52,11 +52,14 @@ class Client extends ConexionSQL{
 
 
         //insert client information into "clientes" table using the contact id
-        $clientSQL = "INSERT INTO clientes (id_Cliente, Nombre, Apellido, Cedula, id_Contacto) VALUES (NULL, :Nombre, :Apellido, :Cedula, :id_Contacto)";
+        $clientSQL = "INSERT INTO clientes 
+        (id_Cliente, Nombre, Apellido, Cedula, edad, id_Contacto) 
+        VALUES (NULL, :Nombre, :Apellido, :Cedula, :edad, :id_Contacto)";
         $query=$this->conexion->prepare($clientSQL);
         $query->bindParam(':Nombre', $firstName);
         $query->bindParam(':Apellido', $lastName);
         $query->bindParam(':Cedula', $Cedula);
+        $query->bindParam(':edad', $edad);
         $query->bindParam(':id_Contacto', $contactID);
 
         if ($query->execute()){
