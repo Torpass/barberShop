@@ -5,6 +5,15 @@
 <?php 
 $horario = new Horarios();
 $tblHorario = $horario->getHorarios();
+
+if(isset($_GET["txtID"])){
+    if($horario->deleteHorario($_GET["txtID"])){
+        echo "<script>Swal.fire('Horario eliminado correctamente')</script>";
+    }else{
+        echo "<script>Swal.fire('Error al eliminar horario')</script>";
+    }
+}
+
 ?>
 
 
@@ -46,7 +55,7 @@ $tblHorario = $horario->getHorarios();
             </td>
             <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                 <a
-                    href="./editEmployee.php?txtID=<?php echo $horario["id_Horario"] ?>"
+                    href="./updateHorario.php?txtID=<?php echo $horario["id_Horario"] ?>"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border-blue-500 rounded">Editar</a>
                 <a
                     href="?txtID=<?php echo $horario["id_Horario"] ?>"
