@@ -56,10 +56,6 @@ $lastsApoitments = $Admin->getLastApointments();
                     <i class='bx bx-stats mr-3 text-lg'></i>                
                     <span class="text-user">Empleados</span>
                 </a>
-                <a href="./adminPanelCitas.php" class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md">
-                    <i class='bx bx-user mr-3 text-lg'></i>                
-                    <span class="text-sm">Citas</span>
-                </a>
             </li>
         </ul>
     </div>
