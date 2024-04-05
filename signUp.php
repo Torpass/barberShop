@@ -31,27 +31,27 @@
           <!-- Cedula Input -->
           <div class="mb-4">
           <label for="cedula" class="block text-gray-600">Cedula</label>
-          <input type="cedula" id="cedula" name="txtCedula" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="number" id="txtCedula" name="txtCedula" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Nombre Input -->
         <div class="mb-4">
           <label for="nombre" class="block text-gray-600">Nombre</label>
-          <input type="nombre" id="nombre" name="txtNombre" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="nombre" id="txtNombre" name="txtNombre" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Apellido Input -->
         <div class="mb-4">
           <label for="apellido" class="block text-gray-600">Apellido</label>
-          <input type="apellido" id="apellido" name="txtApellido" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="apellido" id="txtApellido" name="txtApellido" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Email Input -->
         <div class="mb-4">
           <label for="email" class="block text-gray-600">Email</label>
-          <input type="email" id="email" name="txtEmail" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="email" id="txtEmail" name="txtEmail" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- telefono Input -->
         <div class="mb-4">
           <label for="telefono" class="block text-gray-600">Telefono</label>
-          <input type="telefono" id="telefono" name="txtTelefono" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="number" id="txtTelefono" name="txtTelefono" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
          <!-- Cedula Input -->
          <div class="mb-4">
@@ -66,7 +66,8 @@
       </div>
     </div>
     </div>
-</body>
+    <script src="./src/validators/sigUp.js"></script>
+  </body>
 </html>
 
 
