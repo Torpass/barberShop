@@ -1,9 +1,12 @@
 <?php include("../../clases/Conexion.php")?>
 <?php include("../../clases/Employee.php")?>
+<?php include("../../clases/Horarios.php")?>
 <?php include('../../templates/header.php');?>
 
 <?php
     $Employees= new Employee();
+    $Horario = new Horarios();
+    $horarios = $Horario->getHorarios();
 
 ?>
 
@@ -61,25 +64,27 @@ if(isset($_POST['btnRegistrar'])){
 <body>
     <!-- component -->
 <section class="max-w-4xl mb-12 p-6 mx-auto rounded-md shadow-md dark:bg-gray-800 mt-20">
-    <a class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-500 rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none" href="./index.php">Salir</a>	
     <h1 class="text-xl font-bold text-white capitalize dark:text-white">Crear Empleado</h1>
     <form method="post" action="createEmployee.php" onsubmit="validateForm()">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <!-- input name -->
             <div>
+                <label class="text-white dark:text-gray-200" for="password">Cédula</label>
+                <input id="txtCedula" type="number" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+            </div>
+            
+            <!-- input lastname -->
+            <div>
                 <label class="text-white dark:text-gray-200" for="txtNombre">Nombre</label>
                 <input id="txtNombre" type="text" name="txtNombre" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
-            <!-- input lastname -->
+
             <div>
                 <label class="text-white dark:text-gray-200" for="txtApellido">Apellido</label>
                 <input id="txtApellido" type="input" name="txtApellido" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
 
-            <div>
-                <label class="text-white dark:text-gray-200" for="password">Cédula</label>
-                <input id="txtCedula" type="number" name="txtCedula" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-            </div>
+            
 
             <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Email</label>
@@ -91,17 +96,16 @@ if(isset($_POST['btnRegistrar'])){
                 <input id="txtTelefono" type="number" name="txtTelefono" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
             </div>
 
-
             <div class="mt-4">
                 <label class="text-white dark:text-gray-200" for="horarios">Horarios de Trabajo</label>
                 <select id="txtHorarios" name="txtHorarios[]" multiple class="block w-full px-4 py-2 mt-2 text-gray-70 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring
                 bg-gray-100">
-                    <option value="1" class="mt-2">Lunes 8:00:00am | 5:00:00pm</option>
-                    <option value="2" class="mt-2">Martes 8:00:00am | 5:00:00pm</option>
-                    <option value="3" class="mt-2">Miercoles 8:00:00am | 5:00:00pm</option>
-                    <option value="4" class="mt-2">Jueves 8:00:00am | 5:00:00pm</option>
-                    <option value="5" class="mt-2">Viernes 8:00:00am | 5:00:00pm</option>
-                    <option value="6" class="mt-2">Sabado 9:00:00am | 3:00:00pm</option>
+                    <?php foreach($horarios as $horario):?>
+                    <option value=<?php echo $horario["id_Horario"]?>
+                            class="mt-2">
+                            <?php echo $horario["dia"]." ".$horario["hora_inicio"]." | ".$horario["hora_Finalizacion"]?>
+                    </option>
+                    <?php endforeach;?>
                 </select>
             </div>
 
@@ -116,7 +120,8 @@ if(isset($_POST['btnRegistrar'])){
             </div>
         </div>
 
-        <div class="flex justify-end mt-6">
+        <div class="flex justify-between mt-6">
+            <a class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-500 rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none" href="./index.php">Salir</a>	
             <button name="btnRegistrar" class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Crear</button>
         </div>
     </form>
