@@ -78,5 +78,80 @@ class Admin extends ConexionSQL{
     }
     
 
+    public function reportPuntuacionBarberia(){
+        $sql = "SELECT 
+        ROUND(AVG(Puntuacion), 2) AS puntuacion
+        FROM 
+        resenas_barberia;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function getAllBarberReviews(){
+        $sql ="SELECT 
+        rb.id_Resena_barberia,
+        rb.Puntuacion,
+        rb.Descripcion,
+        rb.status,
+        c.id_Cliente,
+        c.Nombre AS nombre_cliente,
+        c.Apellido AS apellido_cliente
+        FROM 
+        resenas_barberia rb
+        INNER JOIN 
+        clientes c ON rb.id_Cliente = c.id_Cliente;
+        ";
+
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+
+    public function getAvgAgeOfEachService(){
+        $sql = "SELECT 
+        sc.nombre AS nombre_servicio,
+        ROUND(AVG(cl.edad), 2) AS promedio_edad
+        FROM 
+            servicios_reservados sr
+        JOIN 
+            servicios s ON sr.Id_Servicio = s.id_Servicio
+        JOIN 
+            servicios_categoria sc ON s.Id_Categoria = sc.Id_Categoria
+        JOIN 
+            citas c ON sr.Id_Cita = c.Id_Citas
+        JOIN 
+            clientes cl ON c.id_Cliente = cl.id_Cliente
+        GROUP BY 
+        sc.nombre;";
+
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function getAvgAge(){
+        $sql ="SELECT 
+        ROUND(AVG(clientes.edad), 2) AS promedio_edad_barberia
+        FROM 
+        barber.clientes";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
 
 }

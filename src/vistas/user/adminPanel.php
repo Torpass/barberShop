@@ -18,12 +18,20 @@
     </style>
 
 </head>
+
+<?php
+include("../../clases/Conexion.php");
+include("../../clases/Admin.php");
+$Admin = new Admin();
+$puntuaciones = $Admin->reportPuntuacionBarberia();
+$avgAge = $Admin->getAvgAge();
+?>
 <body class="text-gray-800 font-inter">
     <!--sidenav -->
     <div class="fixed left-0 top-0 w-64 h-full bg-[#f8f4f3] p-4 z-50 sidebar-menu transition-transform">
         <a href="#" class="flex items-center pb-4 border-b border-b-gray-800">
 
-            <h2 class="font-bold text-2xl">BARBER <span class="bg-[#f84525] text-white px-2 rounded-md">SHOP</span></h2>
+            <h2 class="font-bold text-2xl">BARBER <span class="bg-indigo-600 text-white px-2 rounded-md">SHOP</span></h2>
         </a>
         <ul class="mt-4">
             <span class="text-gray-400 font-bold">ADMIN</span>
@@ -135,30 +143,15 @@
 
       <!-- Content -->
         <div class="p-6">
-          <!-- cards panel -->
+          <!-- card panel  -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
                     <div class="flex justify-between mb-6">
                         <div>
                             <div class="flex items-center mb-1">
-                                <div class="text-2xl font-semibold">2</div>
+                                <div class="text-2xl font-semibold"><?php echo $puntuaciones[0]["puntuacion"]?></div>
                             </div>
-                            <div class="text-sm font-medium text-gray-400">Users</div>
-                        </div>
-                         <div class="dropdown">
-                            <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
-                        </div> 
-                    </div>
-                    <a href="/gebruikers" class="text-[#f84525] font-medium text-sm hover:text-red-800">View</a>
-                </div>
-                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
-                    <div class="flex justify-between mb-4">
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <div class="text-2xl font-semibold">100</div>
-                                <div class="p-1 rounded bg-emerald-500/10 text-emerald-500 text-[12px] font-semibold leading-none ml-2">+30%</div>
-                            </div>
-                            <div class="text-sm font-medium text-gray-400">Companies</div>
+                            <div class="text-sm font-medium text-gray-400">Promedio clasificación barberia</div>
                         </div>
                          <div class="dropdown">
                             <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
@@ -175,7 +168,39 @@
                             </ul>
                         </div> 
                     </div>
-                    <a href="/dierenartsen" class="text-[#f84525] font-medium text-sm hover:text-red-800">View</a>
+
+                    <a 
+                    target="_blank"
+                    href="../../fpdf/allBarberReview.php" 
+                    class="text-indigo-500 font-medium text-sm hover:text-indigo-800">Ver</a>
+                </div>
+                <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
+                    <div class="flex justify-between mb-4">
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <div class="text-2xl font-semibold"><?php echo $avgAge["promedio_edad_barberia"]." "."Años";?></div>
+                            </div>
+                            <div class="text-sm font-medium text-gray-400">Promedio de edad de los clientes</div>
+                        </div>
+                         <div class="dropdown">
+                            <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
+                            <ul class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
+                                <li>
+                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
+                                </li>
+                            </ul>
+                        </div> 
+                    </div>
+                    <a
+                    target="_blank" 
+                    href="../../fpdf/avgAgeBarber.php" 
+                    class="text-indigo-500 font-medium text-sm hover:text-indigo-800">Ver</a>
                 </div>
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
                     <div class="flex justify-between mb-6">
@@ -198,10 +223,10 @@
                             </ul>
                         </div> 
                     </div>
-                    <a href="" class="text-[#f84525] font-medium text-sm hover:text-red-800">View</a>
+                    <a href="" class="text-indigo-500 font-medium text-sm hover:text-indigo-800">View</a>
                 </div>
             </div>
-            <!-- end of card panel -->
+          <!-- end of card panel  -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
               <!-- user panel -->
                 <div class="p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
