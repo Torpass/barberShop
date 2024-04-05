@@ -12,7 +12,10 @@ $tblHorario = $horario->getHorarios();
 <div class="rounded-t mb-0 px-0 border-0">
     <div class="flex flex-wrap items-center px-4 py-2">
     <div class="relative w-full max-w-full flex-grow flex-1">
-        <h3 class="font-semibold text-base text-gray-900 dark:text-gray-50">Módulo de horarios</h3>
+        <h3 class="font-semibold mb-5 text-base text-gray-900 dark:text-gray-50">Módulo de horarios</h3>
+        <a
+        href="./createHorario.php"
+        class="bg-blue-500 hover:bg-blue-700 mt-8 text-white font-bold py-1 px-2 border-blue-500 rounded">Agregar horario</a>
     </div>
     </div>
     <div class="block w-full overflow-x-auto">
@@ -42,7 +45,12 @@ $tblHorario = $horario->getHorarios();
             <?php echo $horario["hora_Finalizacion"]?>
             </td>
             <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-            <?php echo $horario["hora_Finalizacion"]?>
+                <a
+                    href="./editEmployee.php?txtID=<?php echo $horario["id_Horario"] ?>"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border-blue-500 rounded">Editar</a>
+                <a
+                    href="?txtID=<?php echo $horario["id_Horario"] ?>"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border-blue-500 rounded">Eliminar</a>
             </td>
         </tr>
         <?php endforeach;?>
