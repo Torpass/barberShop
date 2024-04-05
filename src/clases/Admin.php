@@ -7,7 +7,8 @@ class Admin extends ConexionSQL{
 
     public function generateServicesReport(){
 
-        $sql = "SELECT 
+        $sql = "SELECT
+        s.id_Servicio,
         sc.nombre,
         s.duracion,
         s.Precio,
@@ -22,6 +23,31 @@ class Admin extends ConexionSQL{
         sr.Id_Servicio, sc.nombre, s.duracion;
         ";
 
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function mostUnpopularServices(){
+        $sql="SELECT 
+        sr.Id_Servicio,
+        sc.nombre AS nombre_servicio,
+        COUNT(*) AS solicitudes
+        FROM 
+            servicios_reservados sr
+        JOIN 
+            servicios s ON sr.Id_Servicio = s.id_Servicio
+        JOIN 
+            servicios_categoria sc ON s.Id_Categoria = sc.Id_Categoria
+        GROUP BY 
+            sr.Id_Servicio, sc.nombre
+        ORDER BY 
+            solicitudes ASC
+        LIMIT 5;
+        ";
         $query = $this->conexion->prepare($sql);
         if($query->execute()){
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -142,6 +168,113 @@ class Admin extends ConexionSQL{
         }else  {
             return false;
         }
+    }
+
+    public function mostCanceledService(){
+        $sql="SELECT 
+        sr.Id_Servicio,
+        sc.nombre AS nombre_servicio,
+        COUNT(CASE WHEN c.status = 'Cancelado' THEN 1 END) AS citas_canceladas
+        FROM 
+            servicios_reservados sr
+        JOIN 
+            servicios s ON sr.Id_Servicio = s.id_Servicio
+        JOIN 
+            servicios_categoria sc ON s.Id_Categoria = sc.Id_Categoria
+        JOIN 
+            citas c ON sr.Id_Cita = c.Id_Citas
+        GROUP BY 
+            sr.Id_Servicio, sc.nombre
+        ORDER BY 
+            citas_canceladas DESC
+        LIMIT 1;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+
+    }
+
+    public function mostCanceledServices(){
+        $sql="SELECT 
+        sr.Id_Servicio,
+        sc.nombre AS nombre_servicio,
+        COUNT(CASE WHEN c.status = 'Cancelado' THEN 1 END) AS citas_canceladas
+        FROM 
+            servicios_reservados sr
+        JOIN 
+            servicios s ON sr.Id_Servicio = s.id_Servicio
+        JOIN 
+            servicios_categoria sc ON s.Id_Categoria = sc.Id_Categoria
+        JOIN 
+            citas c ON sr.Id_Cita = c.Id_Citas
+        GROUP BY 
+            sr.Id_Servicio, sc.nombre
+        ORDER BY 
+            citas_canceladas DESC
+        LIMIT 5;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+
+    }
+
+    public function mostPopularService(){
+        $sql="SELECT 
+        sr.Id_Servicio,
+        sc.nombre AS nombre_servicio,
+        COUNT(*) AS solicitudes
+        FROM 
+            servicios_reservados sr
+        JOIN 
+            servicios s ON sr.Id_Servicio = s.id_Servicio
+        JOIN 
+            servicios_categoria sc ON s.Id_Categoria = sc.Id_Categoria
+        GROUP BY 
+            sr.Id_Servicio, sc.nombre
+        ORDER BY 
+            solicitudes DESC
+        LIMIT 1;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function mostPopularServices(){
+        $sql="SELECT 
+        sr.Id_Servicio,
+        sc.nombre AS nombre_servicio,
+        COUNT(*) AS solicitudes
+        FROM 
+            servicios_reservados sr
+        JOIN 
+            servicios s ON sr.Id_Servicio = s.id_Servicio
+        JOIN 
+            servicios_categoria sc ON s.Id_Categoria = sc.Id_Categoria
+        GROUP BY 
+            sr.Id_Servicio, sc.nombre
+        ORDER BY 
+            solicitudes DESC
+        LIMIT 5;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+
     }
 
     public function mostFinishedApoitments(){
@@ -370,5 +503,17 @@ class Admin extends ConexionSQL{
     }
     }
     
-
+    public function countAllCitas(){
+        $sql="SELECT 
+        COUNT(*) AS total_citas_realizadas
+        FROM 
+        citas;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
 }
