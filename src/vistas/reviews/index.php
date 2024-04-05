@@ -26,7 +26,7 @@ if(isset($_GET['txtId'])){
 		Agregar Reseña
 	</a>
     <?php if($user_role == 2):?>
-        <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href="../../fpdf/allReviews.php" >
+        <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href="../../fpdf/shitReports/allReviews.php" >
             Generar reporte de reseñas
         </a>
     <?php endif; ?>

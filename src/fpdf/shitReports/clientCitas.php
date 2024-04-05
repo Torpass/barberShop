@@ -1,6 +1,6 @@
 <?php
 
-require('./fpdf.php');
+require('../fpdf.php');
 
 class PDF extends FPDF
 {
@@ -73,8 +73,8 @@ $pdf->SetFont('Arial', '', 12);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 
-include "../clases/Conexion.php";
-include "../clases/Citas.php";
+include "../../clases/Conexion.php";
+include "../../clases/Citas.php";
 
 $Citas = new Citas(); 
 $tblCitas = $Citas->getCitasReport($_GET['txtId']);

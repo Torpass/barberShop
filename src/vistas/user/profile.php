@@ -89,14 +89,9 @@
             <div class="mt-4 flex flex-col w-full 2xl:w-2/3">
                 <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
                     <h4 class="mb-16 text-xl text-gray-900 font-bold">Reporte de Citas realizadas</h4>
-                    <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href=<?php echo "../../fpdf/clientCitas.php?txtId=".$clientId?> >
+                    <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href=<?php echo "../../fpdf/shitReports/clientCitas.php?txtId=".$clientId?> >
                     Generar reporte de citas realizadas
                     </a>
-                    <?php if($user_role = 2):?>
-                    <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" href=<?php echo "../../fpdf/citaspdf.php?Id=".$clientId?> >
-                    Generar reporte de citas realizadas
-                    </a>
-                    <?php endif; ?>
                     <table class="mt-4 min-w-full border-collapse block md:table">
 		<thead class="block md:table-header-group">
 			<tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto md:relative ">

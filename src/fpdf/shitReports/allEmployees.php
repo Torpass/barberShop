@@ -1,6 +1,6 @@
 <?php
 
-require('./fpdf.php');
+require('../fpdf.php');
 
 class PDF extends FPDF
 {
@@ -71,8 +71,8 @@ $pdf->SetFont('Arial', '', 12);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 
-include "../clases/Conexion.php";
-include "../clases/Employee.php";
+include "../../clases/Conexion.php";
+include "../../clases/Employee.php";
 $Employee = new Employee();
 
 // Obtiene todas las reseñas

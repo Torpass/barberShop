@@ -19,7 +19,7 @@
 <h1 class="mt-10 mb-2 block font-sans text-4xl font-bold leading-snug tracking-normal text-blue-gray-900 antialiased" >Estas son tus reseñas</h1>
     <?php if($user_role == 1):?>
         <a class="px-6 my-6 middle none center mr-4 rounded-lg bg-blue-500 py-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true" target="_blank" 
-        href=<?php echo "../../fpdf/reviewsPerEmployee.php?txtId=".$employeeID?> >
+        href=<?php echo "../../fpdf/shitReports/reviewsPerEmployee.php?txtId=".$employeeID?> >
             Generar reporte de tus reseñas
     </a>
     <?php endif; ?>
