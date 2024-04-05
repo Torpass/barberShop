@@ -31,12 +31,12 @@
         <!-- Password Input -->
           <div class="mb-4">
           <label for="cedula" class="block text-gray-600">Cedula</label>
-          <input type="cedula" id="cedula" name="txtCedula" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="number" id="txtCedula" name="txtCedula" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Username Input -->
         <div class="mb-4">
           <label for="nombre" class="block text-gray-600">Nombre</label>
-          <input type="nombre" id="nombre" name="txtNombre" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+          <input type="nombre" id="txtNombre" name="txtNombre" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
         </div>
         <!-- Login Button -->
         <button type="submit" name="btnLogin" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full" >Iniciar Sesión</button>
@@ -48,6 +48,7 @@
       </div>
     </div>
     </div>
+    <script src="./src/validators/login.js"></script>
 </body>
 </html>
 
