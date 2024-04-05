@@ -24,10 +24,11 @@ include("../../clases/Conexion.php");
 include("../../clases/Admin.php");
 $base_url = "localhost/barberShop/";
 $Admin = new Admin();
-$puntuaciones = $Admin->reportPuntuacionBarberia();
-$avgAge = $Admin->getAvgAge();
+$barbersAvgPuntuacion = $Admin->getGeneralAvgBarbers();
+$mostFinishedApoinment = $Admin->mostFinishedApoitments();
 $totalClients = $Admin->getAllRegisteredClients();
-$clientsApointments = $Admin->getClientsWithMoreApointments();
+$employeesWorseAvg = $Admin->generateEmployeeWorsePuntationAverage();
+$mostCanceledEmployees= $Admin->getEMployeesWithMoreCanceledApointments();
 $servicesStats = $Admin->getServicesStats();
 $lastsApoitments = $Admin->getLastApointments();
 ?>
@@ -146,9 +147,9 @@ $lastsApoitments = $Admin->getLastApointments();
                     <div class="flex justify-between mb-6">
                         <div>
                             <div class="flex items-center mb-1">
-                                <div class="text-2xl font-semibold"><?php echo $puntuaciones[0]["puntuacion"]." / 5 ⭐"?></div>
+                                <div class="text-2xl font-semibold"><?php echo $barbersAvgPuntuacion["Promedio_Puntuacion"]." / 5 ⭐"?></div>
                             </div>
-                            <div class="text-sm font-medium text-gray-400">Promedio clasificación barberia</div>
+                            <div class="text-sm font-medium text-gray-400">Promedio clasificación de todos los barberos</div>
                         </div>
                          <div class="dropdown">
                             <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
@@ -168,16 +169,18 @@ $lastsApoitments = $Admin->getLastApointments();
 
                     <a 
                     target="_blank"
-                    href="../../fpdf/allBarberReview.php" 
+                    href="../../fpdf/employeeAvgReview.php" 
                     class="text-indigo-500 font-medium text-sm hover:text-indigo-800">Ver</a>
                 </div>
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
                     <div class="flex justify-between mb-4">
                         <div>
                             <div class="flex items-center mb-1">
-                                <div class="text-2xl font-semibold"><?php echo $avgAge["promedio_edad_barberia"]." "."Años";?></div>
+                                <div class="text-2xl font-semibold">
+                                    <?php echo $mostFinishedApoinment["Nombre"]." ".$mostFinishedApoinment["Apellido"];?></div>
                             </div>
-                            <div class="text-sm font-medium text-gray-400">Promedio de edad de los clientes</div>
+                            <p class="mb-3 text-bold font-medium text-gray-800"><?php echo $mostFinishedApoinment["citas_terminadas"]." Citas"?></p>
+                            <div class="text-sm font-medium text-gray-400">Empleado con mas citas realizadas</div>
                         </div>
                          <div class="dropdown">
                             <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
@@ -196,14 +199,14 @@ $lastsApoitments = $Admin->getLastApointments();
                     </div>
                     <a
                     target="_blank" 
-                    href="../../fpdf/avgAgeBarber.php" 
+                    href="../../fpdf/avgEmployeeParticipation.php" 
                     class="text-indigo-500 font-medium text-sm hover:text-indigo-800">Ver</a>
                 </div>
                 <div class="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
                     <div class="flex justify-between mb-6">
                         <div>
-                            <div class="text-2xl font-semibold mb-1"><?php echo $totalClients["cantidad_clientes_registrados"]?></div>
-                            <div class="text-sm font-medium text-gray-400">Total clientes registrados</div>
+                            <div class="text-2xl font-semibold mb-1">Reporte de citas por cada empleado</div>
+                            <div class="text-sm font-medium text-gray-400">Total de citas de cada empleado</div>
                         </div>
                          <div class="dropdown">
                             <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
@@ -222,7 +225,7 @@ $lastsApoitments = $Admin->getLastApointments();
                     </div>
                     <a
                     target="_blank" 
-                    href="../../fpdf/allClients.php" 
+                    href="../../fpdf/getAllCitasPerEmployee.php" 
                     class="text-indigo-500 font-medium text-sm hover:text-indigo-800">Ver</a>
                 </div>
             </div>
@@ -233,7 +236,7 @@ $lastsApoitments = $Admin->getLastApointments();
                     <div class="rounded-t mb-0 px-0 border-0">
                       <div class="flex flex-wrap items-center px-4 py-2">
                         <div class="relative w-full max-w-full flex-grow flex-1">
-                          <h3 class="font-semibold text-base text-gray-900 dark:text-gray-50">Clientes con mas citas realizadas</h3>
+                          <h3 class="font-semibold text-base text-gray-900 dark:text-gray-50">Empleados con peor promedio de puntuación</h3>
                         </div>
                       </div>
                       <div class="block w-full overflow-x-auto">
@@ -242,21 +245,21 @@ $lastsApoitments = $Admin->getLastApointments();
                             <tr>
                             <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">ID</th>
                               <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Nombre y Apellido</th>
-                              <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Cantidad citas</th>
+                              <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Promedio de puntuación</th>
                               <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px"></th>
                             </tr>
                           </thead>
                           <tbody>
-                            <?php foreach($clientsApointments as $client):?>
+                            <?php foreach($employeesWorseAvg as $employee):?>
                             <tr class="text-gray-700 dark:text-gray-100">
                               <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                <?php echo $client["id_Cliente"]?>
+                                <?php echo $employee["id_Empleado"]?>
                               </th>
                               <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                <?php echo $client["Nombre"]." ".$client["Apellido"]?>
+                                <?php echo $employee["Nombre"]." ".$employee["Apellido"]?>
                               </th>
                               <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <?php echo $client["cantidad_citas_realizadas"]?>
+                                <?php echo $employee["Promedio_Puntuacion"]?>
                               </td>
                             </tr>
                             <?php endforeach;?>
@@ -267,219 +270,44 @@ $lastsApoitments = $Admin->getLastApointments();
                   </div>
               <!-- end of user panel -->
               <!-- activite panel -->
-                  <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
-                    <div class="flex justify-between mb-4 items-start">
-                        <div class="font-medium">Actividad reciente en el sistema</div>
-                         <div class="dropdown">
-                            <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
-                            <ul class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
-                                </li>
-                            </ul>
+              <div class="p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
+                    <div class="rounded-t mb-0 px-0 border-0">
+                      <div class="flex flex-wrap items-center px-4 py-2">
+                        <div class="relative w-full max-w-full flex-grow flex-1">
+                          <h3 class="font-semibold text-base text-gray-900 dark:text-gray-50">Empleados con más citas canceladas</h3>
                         </div>
-                    </div>
-                    <!-- Activities table -->
-                    <div class="overflow-hidden">
-                        <table class="w-full min-w-[540px]">
-                            <tbody>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <div class="flex items-center">
-                                            <a href="#" class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Luis Herice</a>
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">05/04/2024 9:59am</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">Terminó una cita</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <div class="flex items-center">
-                                            <a href="#" class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Karla Gómez</a>
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">05/02/2024 10:10am</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">Realizó una cita</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <div class="flex items-center">
-                                            <a href="#" class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Karla Gómez</a>
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">05/02/2024 10:12am</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">Agregó una reseña</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <div class="flex items-center">
-                                            <a href="#" class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Gianfranco Muños</a>
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">05/02/2024 10:23am</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">Realizó una cita</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <div class="flex items-center">
-                                            <a href="#" class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Luis Herice</a>
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">05/02/2024 10:32am</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">Agregó un nuevo servicio</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <div class="flex items-center">
-                                            <a href="#" class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Anderson Villalonga</a>
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">05/02/2024 10:40am</span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-gray-400">Se registró</span>
-                                    </td>
-                                </tr>
-                            </tbody>
+                      </div>
+                      <div class="block w-full overflow-x-auto">
+                        <table class="items-center w-full bg-transparent border-collapse">
+                          <thead>
+                            <tr>
+                            <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">ID</th>
+                              <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Nombre y Apellido</th>
+                              <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Citas canceladas</th>
+                              <th class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php foreach($mostCanceledEmployees as $employee):?>
+                            <tr class="text-gray-700 dark:text-gray-100">
+                              <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                <?php echo $employee["Id_Empleado"]?>
+                              </th>
+                              <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                <?php echo $employee["Nombre"]." ".$employee["Apellido"]?>
+                              </th>
+                              <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <?php echo $employee["cantidad_citas_canceladas"]?>
+                              </td>
+                            </tr>
+                            <?php endforeach;?>
+                          </tbody>
                         </table>
+                      </div>
                     </div>
-                    <!-- End of cctivities table -->
-
+                  </div>
                 </div>
               <!-- end of activite panel -->
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-              <!-- service statistics panel   -->
-                <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2">
-                    <div class="flex justify-between mb-4 items-start">
-                        <div class="font-medium">Estadísticas de Servicios</div>
-                         <div class="dropdown">
-                            <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
-                            <ul class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
-                                </li>
-                            </ul>
-                        </div> 
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <div class="rounded-md border border-dashed border-gray-200 p-4">
-                            <div class="flex items-center mb-0.5">
-                                <div class="text-xl font-semibold">
-                                  <?php echo $servicesStats["citas_en_espera"];?>
-                                </div>
-                            </div>
-                            <span class="text-gray-400 text-sm">En Espera</span>
-                        </div>
-                        <div class="rounded-md border border-dashed border-gray-200 p-4">
-                            <div class="flex items-center mb-0.5">
-                                <div class="text-xl font-semibold">
-                                  <?php echo $servicesStats["citas_terminadas"];?>
-                                </div>
-                            </div>
-                            <span class="text-gray-400 text-sm">Terminados</span>
-                        </div>
-                        <div class="rounded-md border border-dashed border-gray-200 p-4">
-                            <div class="flex items-center mb-0.5">
-                                <div class="text-xl font-semibold">
-                                <?php echo $servicesStats["citas_canceladas"];?>
-                                </div>
-                            </div>
-                            <span class="text-gray-400 text-sm">Cancelados</span>
-                        </div>
-                    </div>
-                    <div>
-                        <canvas id="order-chart"></canvas>
-                    </div>
-                </div>
-                <!-- end of statistics panel -->
-
-                <!-- earning services -->
-                <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
-                    <div class="flex justify-between mb-4 items-start">
-                        <div class="font-medium">Últimos servicios realizados</div>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-600"><i class="ri-more-fill"></i></button>
-                            <ul class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-[460px]">
-                            <thead>
-                                <tr>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">Servicio</th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">Ganacia</th>
-                                    <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              <?php foreach ($lastsApoitments as $cita): ?>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span href="#" class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">
-                                              <?php echo $cita["nombre_servicio"]?>
-                                        </span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="text-[13px] font-medium text-emerald-500">
-                                          <?php echo $cita["Precio"]."$" ?>
-                                        </span>
-                                    </td>
-                                    <td class="py-2 px-4 border-b border-b-gray-50">
-                                        <span class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">
-                                          <?php echo $cita["status"]?>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <?php endforeach;?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- end of earnig services -->
             </div>
         </div>
       <!-- End Content -->

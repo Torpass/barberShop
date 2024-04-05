@@ -31,23 +31,90 @@ class Admin extends ConexionSQL{
     }
 
 
-    public function generateEmployeePuntationAverage(){
+    public function generateEmployeeWorsePuntationAverage(){
         $sql = "SELECT 
-        e.Nombre,
-        e.Apellido,
-        round(AVG(re.Puntuacion), 2) AS Promedio_Puntuacion
-        FROM 
-        Empleado e
-        inner JOIN 
-        resenas_empleados re ON e.Id_Empleado = re.Id_Empleado
-        GROUP BY 
-        e.Id_Empleado, e.Nombre, e.Apellido;
+            e.id_Empleado,
+            e.Nombre,
+            e.Apellido,
+            ROUND(AVG(re.Puntuacion), 2) AS Promedio_Puntuacion
+            FROM 
+            Empleado e
+            INNER JOIN 
+            resenas_empleados re ON e.Id_Empleado = re.Id_Empleado
+            GROUP BY 
+            e.Id_Empleado, e.Nombre, e.Apellido
+            ORDER BY 
+            Promedio_Puntuacion
+            LIMIT 4;;
         ";
-
-
+        
         $query = $this->conexion->prepare($sql);
         if($query->execute()){
             return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function getEMployeesWithMoreCanceledApointments(){
+        $sql ="SELECT
+        e.Id_Empleado, 
+        e.Nombre,
+        e.Apellido,
+        COUNT(*) AS cantidad_citas_canceladas
+        FROM 
+            Empleado e
+        INNER JOIN 
+            citas c ON e.Id_Empleado = c.Id_Empleado
+        WHERE 
+            c.status = 'Cancelado'
+        GROUP BY 
+            e.Id_Empleado, e.Nombre, e.Apellido
+        ORDER BY 
+            cantidad_citas_canceladas DESC
+        LIMIT 5;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function getAvgPuntuationPerEmployee(){
+        $sql = "SELECT 
+        ea.Id_Empleado,
+        ea.Nombre,
+        ea.Apellido,
+        COALESCE(ROUND(AVG(re.Puntuacion), 2), 'Sin reseñas') AS Promedio_Puntuacion
+        FROM 
+        Empleado ea
+        LEFT JOIN 
+        resenas_empleados re ON ea.Id_Empleado = re.Id_Empleado
+        GROUP BY 
+        ea.Id_Empleado, ea.Nombre, ea.Apellido
+        ORDER BY 
+        CASE WHEN Promedio_Puntuacion = 'Sin reseñas' THEN 1 ELSE 0 END,
+        Promedio_Puntuacion DESC;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function getGeneralAvgBarbers(){
+        $sql = "SELECT 
+        ROUND(AVG(re.Puntuacion), 2) AS Promedio_Puntuacion
+        FROM 
+        resenas_empleados re;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
         }else{
             return false;
         }
@@ -73,6 +140,53 @@ class Admin extends ConexionSQL{
         if($query->execute()){
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }else  {
+            return false;
+        }
+    }
+
+    public function mostFinishedApoitments(){
+        $sql="SELECT 
+        e.Id_Empleado,
+        e.Nombre,
+        e.Apellido,
+        COUNT(CASE WHEN c.status = 'Terminado' THEN 1 END) AS citas_terminadas
+        FROM 
+            Empleado e
+        JOIN 
+            citas c ON e.Id_Empleado = c.Id_Empleado
+        GROUP BY 
+            e.Id_Empleado, e.Nombre, e.Apellido
+        ORDER BY 
+            citas_terminadas DESC
+        LIMIT 1;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }else{
+            return false;
+        }
+    }
+
+    public function avgEmployeeParticipation(){
+        $sql = "SELECT 
+        e.Id_Empleado,
+        e.Nombre,
+        e.Apellido,
+        COUNT(CASE WHEN c.status = 'Terminado' THEN 1 END) AS citas_terminadas,
+        ROUND(COUNT(CASE WHEN c.status = 'Terminado' THEN 1 END) * 100.0 / 
+              (SELECT COUNT(*) FROM citas WHERE status = 'Terminado'), 2) AS procentaje_participacion
+        FROM 
+            Empleado e
+        JOIN 
+            citas c ON e.Id_Empleado = c.Id_Empleado
+        GROUP BY 
+            e.Id_Empleado, e.Nombre, e.Apellido;
+        ";
+        $query = $this->conexion->prepare($sql);
+        if($query->execute()){
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }else{
             return false;
         }
     }
